@@ -43,13 +43,15 @@ The current fixes don't work:
 
 Your AI's memory shouldn't be owned by a corporation. It should be yours — in a single file, on your machine, working with any LLM.
 
+> **Think about that.** You've had thousands of conversations with AI. Every preference you shared, every decision you made together, every correction — gone. Imagine if your AI remembered all of it. Every conversation. Every project. Every year. That's what this is.
+
 ---
 
 ## The Solution
 
 AgenticMemory stores your agent's knowledge as a **navigable graph** in a single binary file.
 
-Not "search your old conversations." Your agent has a **brain** — a structured representation of every fact it learned, every decision it made, every correction it accepted, and every reasoning chain it followed.
+Not "search your old conversations." Your agent has a **brain** — a structured representation of every fact it learned, every decision it made, every correction it accepted, and every reasoning chain it followed. An agent that talked to you every day for 10 years would need less than 500 MB to remember everything.
 
 ```python
 from agentic_memory import Brain
