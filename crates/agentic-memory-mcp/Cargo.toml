@@ -1,0 +1,65 @@
+[package]
+name = "agentic-memory-mcp"
+version = "0.1.0"
+edition = "2021"
+authors = ["Omoshola Owolabi"]
+description = "MCP server for AgenticMemory - universal LLM access to persistent graph memory"
+license = "MIT"
+repository = "https://github.com/agentic-revolution/agentic-memory"
+keywords = ["mcp", "llm", "memory", "agent", "ai"]
+categories = ["development-tools", "memory-management"]
+
+[dependencies]
+# AgenticMemory core library
+agentic-memory = { version = "0.2.0", path = "../agentic-memory" }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# CLI parsing
+clap = { version = "4.4", features = ["derive"] }
+
+# Configuration
+toml = "0.8"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# UUID generation (for request IDs, progress tokens)
+uuid = { version = "1.6", features = ["v4"] }
+
+# HTTP server for SSE transport (optional feature)
+axum = { version = "0.7", optional = true }
+tower = { version = "0.4", optional = true }
+tower-http = { version = "0.5", features = ["cors"], optional = true }
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+tempfile = "3.9"
+tokio-test = "0.4"
+
+[features]
+default = ["stdio"]
+stdio = []
+sse = ["axum", "tower", "tower-http"]
+all-transports = ["stdio", "sse"]
+
+[[bin]]
+name = "agentic-memory-mcp"
+path = "src/main.rs"
+
+[lib]
+name = "agentic_memory_mcp"
+path = "src/lib.rs"
+

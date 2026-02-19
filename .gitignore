@@ -52,6 +52,10 @@ planning-docs/
 CLAUDE-CODE-INSTRUCTIONS*.md
 SPEC-*.md
 
+# MCP crate internal docs / specs / AI prompts
+crates/agentic-memory-mcp/docs/
+crates/agentic-memory-mcp/scripts/
+
 # Claude Code
 .claude/
 

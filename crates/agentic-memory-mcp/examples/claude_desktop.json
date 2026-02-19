@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agentic-memory": {
+      "command": "agentic-memory-mcp",
+      "args": ["serve", "--memory", "/path/to/brain.amem"]
+    }
+  }
+}

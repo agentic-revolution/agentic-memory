@@ -1,0 +1,17 @@
+# AgenticMemory MCP Server — Default Configuration
+
+# Path to the .amem memory file
+# Resolved in order: CLI arg > AMEM_BRAIN env > .amem/brain.amem (cwd) > ~/.agentic/memory/brain.amem
+# memory_path = "~/.agentic/memory/brain.amem"
+
+# Transport type: "stdio" or "sse"
+transport = "stdio"
+
+# SSE listen address (only used when transport is "sse")
+sse_addr = "127.0.0.1:3000"
+
+# Auto-save interval in seconds
+auto_save_interval = 30
+
+# Log level: trace, debug, info, warn, error
+log_level = "info"

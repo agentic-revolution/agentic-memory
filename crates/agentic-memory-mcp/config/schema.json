@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgenticMemory MCP Server Configuration",
+  "description": "Configuration schema for the agentic-memory-mcp server.",
+  "type": "object",
+  "properties": {
+    "memory_path": {
+      "type": "string",
+      "description": "Path to the .amem memory file. Resolved in order: CLI arg > AMEM_BRAIN env > .amem/brain.amem (cwd) > ~/.agentic/memory/brain.amem"
+    },
+    "transport": {
+      "type": "string",
+      "enum": ["stdio", "sse"],
+      "default": "stdio",
+      "description": "Transport type: stdio (default) or sse"
+    },
+    "sse_addr": {
+      "type": "string",
+      "default": "127.0.0.1:3000",
+      "description": "SSE listen address (only used when transport is 'sse')",
+      "pattern": "^[\\w.-]+:\\d+$"
+    },
+    "auto_save_interval": {
+      "type": "integer",
+      "default": 30,
+      "minimum": 1,
+      "maximum": 3600,
+      "description": "Auto-save interval in seconds"
+    },
+    "log_level": {
+      "type": "string",
+      "enum": ["trace", "debug", "info", "warn", "error"],
+      "default": "info",
+      "description": "Log level for the server"
+    }
+  },
+  "additionalProperties": false
+}

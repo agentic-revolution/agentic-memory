@@ -375,6 +375,57 @@ Cross-provider tests prove: facts, decisions, corrections, skills, and reasoning
 
 ---
 
+## Repository Structure
+
+This is a Cargo workspace monorepo containing the core library, MCP server, and integration bridge tests.
+
+```
+agentic-memory/
+├── Cargo.toml                    # Workspace root
+├── crates/
+│   ├── agentic-memory/           # Core library: binary graph format
+│   └── agentic-memory-mcp/       # MCP server: protocol bridge
+├── tests/bridge/                 # Integration tests (core ↔ MCP)
+├── examples/                     # Python + Rust usage examples
+├── scripts/                      # Claude test + publish scripts
+├── paper/                        # Research papers
+└── docs/                         # API reference + specs
+```
+
+### Running Tests
+
+```bash
+# All workspace tests (unit + integration + bridge)
+cargo test --workspace
+
+# Bridge integration tests only
+cargo test -p agentic-memory-bridge-tests
+
+# Stress tests
+cargo test -p agentic-memory-bridge-tests --test bridge_stress
+```
+
+### MCP Server Quick Start
+
+```bash
+cargo install agentic-memory-mcp
+```
+
+Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "memory": {
+      "command": "agentic-memory-mcp",
+      "args": ["serve", "--memory", "~/brain.amem"]
+    }
+  }
+}
+```
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). The fastest ways to help:
