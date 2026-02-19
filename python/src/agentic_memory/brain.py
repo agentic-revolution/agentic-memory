@@ -106,22 +106,19 @@ class Brain:
         self._binary = find_amem_binary(amem_binary)
         self._timeout = DEFAULT_TIMEOUT
 
-        # Log brain status on init so users know memory is active
+        # Log brain status on init (structured, for programmatic use)
         if self._path.is_file():
             try:
                 bi = self.info()
                 logger.info(
-                    "AgenticMemory loaded: %s (%d nodes, %d edges, %d sessions)",
+                    "Brain loaded: %s (%d nodes, %d edges, %d sessions)",
                     self._path.name, bi.node_count, bi.edge_count,
                     bi.session_count,
                 )
             except Exception:
-                logger.info("AgenticMemory attached: %s", self._path.name)
+                logger.info("Brain attached: %s", self._path.name)
         else:
-            logger.info(
-                "AgenticMemory ready: %s (new brain, will create on first write)",
-                self._path.name,
-            )
+            logger.info("Brain ready: %s (new)", self._path.name)
 
     # ================================================================
     # PROPERTIES

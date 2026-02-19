@@ -8,6 +8,7 @@ cognitive events, and stores them.
 from __future__ import annotations
 
 import logging
+import sys
 from typing import Optional
 
 from agentic_memory.brain import Brain
@@ -23,6 +24,18 @@ _DEFAULT_SYSTEM_PROMPT = (
     "conversations with this user."
 )
 
+# ── Pretty terminal output (verbose mode only) ─────────────────────
+_CYAN = "\033[36m"
+_GREEN = "\033[32m"
+_DIM = "\033[2m"
+_RESET = "\033[0m"
+_BOLD = "\033[1m"
+
+
+def _vprint(msg: str) -> None:
+    """Print a clean status line to stderr (verbose mode only)."""
+    print(f"  {_CYAN}\u25cf{_RESET} {msg}", file=sys.stderr)
+
 
 class MemoryAgent:
     """High-level agent that handles the full memory loop.
@@ -37,6 +50,7 @@ class MemoryAgent:
         system_prompt: Custom system prompt (optional).
         max_context_tokens: Maximum tokens for memory context (default: 2000).
         extract_events: Whether to extract events after each turn (default: True).
+        verbose: Show clean status output (default: False).
 
     Example:
         >>> from agentic_memory import Brain, MemoryAgent
@@ -44,7 +58,7 @@ class MemoryAgent:
         >>>
         >>> brain = Brain("agent.amem")
         >>> provider = AnthropicProvider()
-        >>> agent = MemoryAgent(brain=brain, provider=provider)
+        >>> agent = MemoryAgent(brain=brain, provider=provider, verbose=True)
         >>>
         >>> response = agent.chat("My name is Marcus", session=1)
         >>> # Later, in a new session:
@@ -70,15 +84,31 @@ class MemoryAgent:
         self._last_extraction: ExtractionResult | None = None
 
         if self._verbose:
-            # Ensure the agentic_memory logger shows INFO messages
-            pkg_logger = logging.getLogger("agentic_memory")
-            if not pkg_logger.handlers:
-                handler = logging.StreamHandler()
-                handler.setFormatter(logging.Formatter(
-                    "\033[36m[memory]\033[0m %(message)s"
-                ))
-                pkg_logger.addHandler(handler)
-            pkg_logger.setLevel(logging.INFO)
+            self._print_banner()
+
+    def _print_banner(self) -> None:
+        """Print a compact startup banner."""
+        try:
+            bi = self._brain.info()
+            brain_name = self._brain.path.name
+            ns = "node" if bi.node_count == 1 else "nodes"
+            ss = "session" if bi.session_count == 1 else "sessions"
+            status = (
+                f"{_BOLD}AgenticMemory{_RESET} "
+                f"{_DIM}v0.2{_RESET}  "
+                f"\U0001f9e0 {brain_name}  "
+                f"{_DIM}{bi.node_count} {ns} \u00b7 "
+                f"{bi.session_count} {ss}{_RESET}"
+            )
+        except Exception:
+            brain_name = self._brain.path.name
+            status = (
+                f"{_BOLD}AgenticMemory{_RESET} "
+                f"{_DIM}v0.2{_RESET}  "
+                f"\U0001f9e0 {brain_name}  "
+                f"{_DIM}new brain{_RESET}"
+            )
+        print(status, file=sys.stderr)
 
     def chat(
         self,
@@ -115,11 +145,16 @@ class MemoryAgent:
         )
 
         if memory_context:
-            # Count lines as a rough proxy for memory items retrieved
             mem_lines = [l for l in memory_context.splitlines() if l.strip().startswith("-")]
-            logger.info("Retrieved %d memories for this query", len(mem_lines))
+            n = len(mem_lines)
+            logger.info("Retrieved %d memories for this query", n)
+            if self._verbose:
+                w = "memory" if n == 1 else "memories"
+                _vprint(f"Recalled {_GREEN}{n}{_RESET} {w}")
         else:
             logger.info("No prior memories found (new brain or no matches)")
+            if self._verbose:
+                _vprint(f"No prior memories {_DIM}(first conversation){_RESET}")
 
         # Step 2: Build system prompt
         system_parts = [self._system_prompt]
@@ -140,6 +175,8 @@ class MemoryAgent:
         messages.append(ChatMessage(role="user", content=message))
 
         # Step 4: Call LLM
+        if self._verbose:
+            _vprint(f"Thinking{_DIM}...{_RESET}")
         response = self._provider.chat(messages)
 
         # Step 5: Extract and store events (non-blocking — failures don't crash)
@@ -178,7 +215,7 @@ class MemoryAgent:
             )
             self._last_extraction = result
 
-            # Log what was extracted
+            # Summarize what was extracted
             if result.events or result.corrections:
                 type_counts: dict[str, int] = {}
                 for ev in result.events:
@@ -186,7 +223,10 @@ class MemoryAgent:
                 parts = [f"{c} {t}{'s' if c > 1 else ''}" for t, c in type_counts.items()]
                 if result.corrections:
                     parts.append(f"{len(result.corrections)} correction{'s' if len(result.corrections) > 1 else ''}")
-                logger.info("Extracted and saved: %s", ", ".join(parts))
+                summary = ", ".join(parts)
+                logger.info("Extracted: %s", summary)
+                if self._verbose:
+                    _vprint(f"Saved {_GREEN}{summary}{_RESET}")
 
             # Store extracted events
             for event in result.events:
