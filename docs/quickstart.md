@@ -10,12 +10,12 @@ Get AgenticMemory running in under 5 minutes. This guide covers installation, cr
 pip install agentic-brain
 ```
 
-Requires Python 3.9 or later. The package includes pre-built binaries for macOS (ARM and x86), Linux (x86_64), and Windows (x86_64). No Rust toolchain needed.
+Requires Python 3.10 or later. The package includes pre-built binaries for macOS (ARM and x86), Linux (x86_64), and Windows (x86_64). No Rust toolchain needed.
 
 ### Rust CLI
 
 ```bash
-cargo install agentic-memory
+cargo install amem
 ```
 
 This installs the `amem` binary. Requires Rust 1.70 or later.
@@ -23,7 +23,7 @@ This installs the `amem` binary. Requires Rust 1.70 or later.
 ### From Source
 
 ```bash
-git clone https://github.com/anthropic/agentic-memory.git
+git clone https://github.com/agentic-revolution/agentic-memory.git
 cd agentic-memory
 cargo build --release
 pip install -e python/
