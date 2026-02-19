@@ -192,7 +192,7 @@ amem info my_agent.amem
 amem-install --auto
 ```
 
-This scans your machine for Claude Code, Cursor, Windsurf, Continue, Ollama, and more — then connects them all to a shared brain file. [Learn more →](docs/integration-guide.md)
+This scans your machine for Claude Code, Cursor, Windsurf, Continue, Ollama, and more — then connects them all to a shared brain file. [Full installation guide →](INSTALL.md)
 
 <p align="center">
   <img src="assets/cli-demo.svg" alt="CLI Demo" width="700">
