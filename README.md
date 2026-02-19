@@ -488,7 +488,7 @@ Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_c
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). The fastest ways to help:
 
-1. **Try it** and [file issues](https://github.com/agentic-revolution/agentic-memory/issues)
+1. **Try it** and [file issues](https://github.com/xeo-labs/agentic-memory/issues)
 2. **Add an LLM provider** -- write an integration for a new backend
 3. **Write an example** -- show a real use case
 4. **Improve docs** -- every clarification helps someone
@@ -496,5 +496,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). The fastest ways to help:
 ---
 
 <p align="center">
-  <sub>Built by <a href="https://github.com/agentic-revolution"><strong>Agentic Revolution</strong></a> -- The agent infrastructure company.</sub>
+  <sub>Built by <a href="https://github.com/xeo-labs"><strong>Xeo Labs</strong></a></sub>
 </p>

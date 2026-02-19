@@ -222,7 +222,7 @@ All 5 tools now share persistent memory.
 ## Build from Source
 
 ```bash
-git clone https://github.com/agentic-revolution/agentic-memory.git
+git clone https://github.com/xeo-labs/agentic-memory.git
 cd agentic-memory
 
 # Build entire workspace (core library + MCP server)
@@ -333,7 +333,7 @@ cargo install agentic-memory
 Or build from source if you don't have Rust:
 
 ```bash
-git clone https://github.com/agentic-revolution/agentic-memory.git
+git clone https://github.com/xeo-labs/agentic-memory.git
 cd agentic-memory
 cargo build --release
 cp target/release/amem /usr/local/bin/
