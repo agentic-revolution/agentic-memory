@@ -233,15 +233,19 @@ from agentic_memory import Brain, MemoryAgent
 from agentic_memory.integrations import AnthropicProvider
 
 brain = Brain("my_agent.amem")
-agent = MemoryAgent(brain=brain, provider=AnthropicProvider())
+agent = MemoryAgent(brain=brain, provider=AnthropicProvider(), verbose=True)
 
 # Session 1
 agent.chat("My name is Marcus. I'm building a Rust compiler.", session=1)
 
 # Session 2 -- the agent remembers
-agent.chat("What am I working on?", session=2)
+response = agent.chat("What am I working on?", session=2)
 # -> "You're building a Rust compiler, Marcus."
 ```
+
+<p align="center">
+  <img src="assets/agent-demo.svg" alt="MemoryAgent verbose output showing recall, thinking, and save" width="750">
+</p>
 
 ### Use the brain directly -- no LLM needed
 
