@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/hero-banner.svg" alt="AgenticMemory" width="800">
+  <img src="assets/logo.svg" alt="AgenticMemory" width="320">
 </p>
 
 <p align="center">

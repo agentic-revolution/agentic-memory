@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="64" viewBox="0 0 320 64" fill="none">
-  <!-- Logo icon: connected graph nodes -->
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Center node -->
   <circle cx="32" cy="32" r="6" fill="#6366f1" opacity="0.3"/>
   <circle cx="32" cy="32" r="3" fill="#6366f1"/>
+  <!-- Corner nodes -->
   <circle cx="16" cy="16" r="4" fill="#8b5cf6" opacity="0.3"/>
   <circle cx="16" cy="16" r="2" fill="#8b5cf6"/>
   <circle cx="48" cy="16" r="4" fill="#a78bfa" opacity="0.3"/>
@@ -17,6 +18,4 @@
   <path d="M 46 46 L 34 34" stroke="#6366f1" stroke-width="1.5" opacity="0.5"/>
   <!-- Orbital ring -->
   <circle cx="32" cy="32" r="24" stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.2" stroke-dasharray="4 4"/>
-  <!-- Wordmark -->
-  <text x="72" y="41" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#6366f1">AgenticMemory</text>
 </svg>
