@@ -58,14 +58,14 @@ enum Commands {
         mode: String,
     },
 
-    /// Start MCP server over SSE (HTTP).
+    /// Start MCP server over HTTP.
     #[cfg(feature = "sse")]
     ServeHttp {
-        /// Listen address.
+        /// Listen address (host:port).
         #[arg(long, default_value = "127.0.0.1:3000")]
         addr: String,
 
-        /// Path to .amem memory file.
+        /// Path to .amem memory file (single-user mode).
         #[arg(short, long)]
         memory: Option<String>,
 
@@ -80,6 +80,20 @@ enum Commands {
         /// Memory mode: minimal, smart, full. Default: smart.
         #[arg(long, default_value = "smart")]
         mode: String,
+
+        /// Bearer token for authentication.
+        /// Also reads from AGENTIC_TOKEN env var.
+        #[arg(long)]
+        token: Option<String>,
+
+        /// Enable multi-tenant mode (per-user brain files).
+        #[arg(long)]
+        multi_tenant: bool,
+
+        /// Data directory for multi-tenant brain files.
+        /// Each user gets {data-dir}/{user-id}.amem.
+        #[arg(long)]
+        data_dir: Option<String>,
     },
 
     /// Validate a memory file.
@@ -169,17 +183,52 @@ async fn main() -> anyhow::Result<()> {
             config: _,
             log_level: _,
             mode,
+            token,
+            multi_tenant,
+            data_dir,
         } => {
-            let effective_memory = memory.or(cli.memory);
-            let memory_path = resolve_memory_path(effective_memory.as_deref());
+            use agentic_memory_mcp::transport::sse::{ServerMode, SseTransport};
+            use agentic_memory_mcp::session::tenant::TenantRegistry;
+
             let memory_mode = MemoryMode::parse(&mode).unwrap_or_else(|| {
                 tracing::warn!("Unknown mode '{mode}', falling back to 'smart'");
                 MemoryMode::Smart
             });
-            let session = SessionManager::open(&memory_path)?;
-            let session = Arc::new(Mutex::new(session));
-            let handler = ProtocolHandler::with_mode(session, memory_mode);
-            let transport = agentic_memory_mcp::transport::SseTransport::new(handler);
+
+            // Resolve token: CLI flag > env var
+            let effective_token = token.or_else(|| std::env::var("AGENTIC_TOKEN").ok());
+
+            let server_mode = if multi_tenant {
+                let dir = data_dir.unwrap_or_else(|| {
+                    eprintln!("Error: --data-dir is required when using --multi-tenant");
+                    std::process::exit(1);
+                });
+                let dir = std::path::PathBuf::from(&dir);
+                tracing::info!("AgenticMemory MCP server (multi-tenant)");
+                tracing::info!("Data dir: {}", dir.display());
+                tracing::info!("Mode: {mode}");
+                ServerMode::MultiTenant {
+                    data_dir: dir.clone(),
+                    registry: Arc::new(Mutex::new(TenantRegistry::new(&dir))),
+                    memory_mode,
+                }
+            } else {
+                let effective_memory = memory.or(cli.memory);
+                let memory_path = resolve_memory_path(effective_memory.as_deref());
+                tracing::info!("AgenticMemory MCP server");
+                tracing::info!("Brain: {memory_path}");
+                tracing::info!("Mode: {mode}");
+                let session = SessionManager::open(&memory_path)?;
+                let session = Arc::new(Mutex::new(session));
+                let handler = ProtocolHandler::with_mode(session, memory_mode);
+                ServerMode::Single(Arc::new(handler))
+            };
+
+            if effective_token.is_some() {
+                tracing::info!("Auth: bearer token required");
+            }
+
+            let transport = SseTransport::with_config(effective_token, server_mode);
             transport.run(&addr).await?;
         }
 

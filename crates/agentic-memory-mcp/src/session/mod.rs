@@ -2,6 +2,8 @@
 
 pub mod autosave;
 pub mod manager;
+#[cfg(feature = "sse")]
+pub mod tenant;
 pub mod transaction;
 
 pub use manager::SessionManager;
