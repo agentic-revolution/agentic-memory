@@ -2,6 +2,35 @@
 
 All notable changes to AgenticMemory will be documented in this file.
 
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased] — v0.2.0 Remote Server Support
+
+### Planned
+
+- **Remote HTTP/SSE transport** (`serve-http` command)
+  - `--token` flag for bearer authentication
+  - `--multi-tenant --data-dir` for per-user brain files
+  - `/health` endpoint for monitoring
+  - `--tls-cert` / `--tls-key` for native HTTPS (optional)
+
+- **New CLI commands**
+  - `delete` — remove a specific memory node
+  - `export` — export brain to JSON
+  - `compact` — defragment and optimize brain file
+
+- **Infrastructure**
+  - Docker image (`agenticrevolution/agentic-memory-mcp`)
+  - docker-compose with Caddy reverse proxy
+  - Systemd service file
+  - `docs/remote-deployment.md`
+
+- **New error codes**
+  - `UNAUTHORIZED (-32803)`, `USER_NOT_FOUND (-32804)`, `RATE_LIMITED (-32805)`
+
+Tracking: [#1](https://github.com/xeo-labs/agentic-memory/issues/1)
+
 ## [0.2.0] - 2026-02-19
 
 ### Added

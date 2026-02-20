@@ -502,6 +502,37 @@ Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_c
 
 ---
 
+## Roadmap: v0.2.0 — Remote Server Support
+
+The next release adds HTTP/SSE transport for remote deployments. Track progress in [#1](https://github.com/xeo-labs/agentic-memory/issues/1).
+
+| Feature | Status |
+|:---|:---|
+| `--token` bearer auth | Planned |
+| `--multi-tenant` per-user brain files | Planned |
+| `/health` endpoint | Planned |
+| `--tls-cert` / `--tls-key` native HTTPS | Planned |
+| `delete` / `export` / `compact` CLI commands | Planned |
+| Docker image + compose | Planned |
+| Remote deployment docs | Planned |
+
+```bash
+# Remote single-user
+agentic-memory-mcp serve-http \
+  --memory /data/brain.amem \
+  --port 8080 \
+  --token "secret123"
+
+# Remote multi-tenant
+agentic-memory-mcp serve-http \
+  --multi-tenant \
+  --data-dir /data/users/ \
+  --port 8080 \
+  --token "secret123"
+```
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). The fastest ways to help:

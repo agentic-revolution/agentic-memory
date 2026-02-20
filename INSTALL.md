@@ -227,6 +227,29 @@ All 5 tools now share persistent memory.
 
 ---
 
+## 5. Remote Server (coming in v0.2.0)
+
+> **Preview** — these features are under development. Track progress in [#1](https://github.com/xeo-labs/agentic-memory/issues/1).
+
+```bash
+# Remote single-user
+agentic-memory-mcp serve-http \
+  --memory /data/brain.amem \
+  --port 8080 \
+  --token "secret123"
+
+# Remote multi-tenant
+agentic-memory-mcp serve-http \
+  --multi-tenant \
+  --data-dir /data/users/ \
+  --port 8080 \
+  --token "secret123"
+```
+
+Docker compose with Caddy reverse proxy will also be available. See the [v0.2.0 roadmap](https://github.com/xeo-labs/agentic-memory/issues/1) for details.
+
+---
+
 ## Build from Source
 
 ```bash
