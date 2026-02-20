@@ -23,7 +23,7 @@ from amem_agent.llm.base import LLMResponse, Message, normalize_embedding
 
 AMEM_BINARY = os.environ.get(
     "AMEM_BINARY",
-    "/Users/omoshola/Documents/agentic-revolution/agentic-memory/target/release/amem",
+    str(Path(__file__).resolve().parents[2] / "target" / "release" / "amem"),
 )
 
 

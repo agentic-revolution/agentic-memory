@@ -10,7 +10,7 @@ def test_platform_detect():
     info = PlatformInfo.detect()
     assert info.home == Path.home()
     assert info.amem_dir == Path.home() / ".amem"
-    assert info.brain_path == Path.home() / ".amem" / "brain.amem"
+    assert info.brain_path == Path.home() / ".brain.amem"
 
 
 def test_platform_os_detection():
@@ -30,4 +30,4 @@ def test_platform_sandbox(sandbox):
     p = sandbox.platform
     assert p.home == sandbox.home
     assert p.amem_dir == sandbox.home / ".amem"
-    assert p.brain_path == sandbox.home / ".amem" / "brain.amem"
+    assert p.brain_path == sandbox.home / ".brain.amem"

@@ -35,7 +35,7 @@ class SandboxEnv:
             config_dir=self.home / ".config",
             data_dir=self.home / ".local" / "share",
             amem_dir=self.home / ".amem",
-            brain_path=self.home / ".amem" / "brain.amem",
+            brain_path=self.home / ".brain.amem",
         )
 
     def install_claude_code(self, existing_config: dict | None = None) -> Path:
