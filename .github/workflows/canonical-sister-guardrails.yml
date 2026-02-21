@@ -1,0 +1,31 @@
+name: Canonical Sister Guardrails
+
+on:
+  push:
+    paths:
+      - "README.md"
+      - "scripts/install.sh"
+      - "scripts/check-install-commands.sh"
+      - "scripts/check-canonical-sister.sh"
+      - "docs/internal/CANONICAL_SISTER_KIT.md"
+      - "templates/sister-bootstrap/**"
+      - ".github/workflows/canonical-sister-guardrails.yml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "scripts/install.sh"
+      - "scripts/check-install-commands.sh"
+      - "scripts/check-canonical-sister.sh"
+      - "docs/internal/CANONICAL_SISTER_KIT.md"
+      - "templates/sister-bootstrap/**"
+      - ".github/workflows/canonical-sister-guardrails.yml"
+
+jobs:
+  validate-canonical-sister:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install command guardrails
+        run: ./scripts/check-install-commands.sh
+      - name: Canonical sister guardrails
+        run: ./scripts/check-canonical-sister.sh
