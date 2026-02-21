@@ -49,8 +49,6 @@ htmlcov/
 
 # Planning docs / AI prompts (internal only)
 planning-docs/
-docs/planning/
-docs/internal/
 CLAUDE-CODE-INSTRUCTIONS*.md
 SPEC-*.md
 

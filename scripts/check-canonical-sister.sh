@@ -26,6 +26,20 @@ assert_contains() {
   find_fixed "$pattern" "$@" >/dev/null || fail "Missing required pattern: ${pattern}"
 }
 
+assert_not_tracked() {
+  local path="$1"
+  if git ls-files --error-unmatch "$path" >/dev/null 2>&1; then
+    fail "Internal-only file must not be tracked: $path"
+  fi
+}
+
+assert_no_tracked_prefix() {
+  local pattern="$1"
+  if [ -n "$(git ls-files "$pattern")" ]; then
+    fail "Internal-only path must not be tracked: $pattern"
+  fi
+}
+
 assert_image_spacing() {
   local min_gap=10
   local prev=0
@@ -43,6 +57,8 @@ assert_file "docs/ecosystem/CANONICAL_SISTER_KIT.md"
 assert_file "templates/sister-bootstrap/README.template.md"
 assert_file "scripts/install.sh"
 assert_file "scripts/check-install-commands.sh"
+assert_not_tracked "ECOSYSTEM-CONVENTIONS.md"
+assert_no_tracked_prefix "docs/internal/*"
 
 assert_contains '## 1. Release Artifact Contract' docs/ecosystem/CANONICAL_SISTER_KIT.md
 assert_contains '## 2. Install Contract Spec' docs/ecosystem/CANONICAL_SISTER_KIT.md
