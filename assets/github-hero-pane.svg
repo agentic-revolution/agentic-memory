@@ -1,50 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 360" role="img" aria-label="AgenticMemory hero pane in Agentra design system">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 360" role="img" aria-label="AgenticMemory GitHub hero pane">
   <defs>
-    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1" fill="#c9c6bb"/>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#b8b6ae"/>
     </pattern>
-    <style><![CDATA[
-      .ink { fill:#121212; }
-      .muted { fill:#6d6a63; }
-      .accent { fill:#ea580c; }
-      .mono { font-family:'IBM Plex Mono','JetBrains Mono',monospace; }
-      .sans { font-family:'Sora','Space Grotesk',sans-serif; }
-    ]]></style>
   </defs>
-
   <rect width="1400" height="360" fill="#f2f1ea"/>
   <rect width="1400" height="360" fill="url(#grid)"/>
+  <rect x="20" y="20" width="1360" height="320" fill="none" stroke="#111111" stroke-width="2"/>
 
-  <line x1="28" y1="34" x2="1372" y2="34" stroke="#1f1f1f" stroke-width="1"/>
-  <text x="28" y="26" class="mono muted" font-size="13" letter-spacing="2">// SECTION: MEMORY.SYSTEM</text>
-  <text x="1338" y="26" class="mono muted" font-size="13" text-anchor="end" letter-spacing="2">TICK:1001</text>
+  <line x1="20" y1="62" x2="1380" y2="62" stroke="#111111" stroke-width="2"/>
+  <text x="40" y="48" font-family="'JetBrains Mono', monospace" font-size="14" fill="#5f5c53" letter-spacing="2"> // AGENTRA_LABS: MODULE_HERO</text>
+  <rect x="1318" y="36" width="8" height="8" fill="#ea580c"/>
+  <text x="1336" y="48" font-family="'JetBrains Mono', monospace" font-size="12" fill="#5f5c53" letter-spacing="2">001</text>
 
-  <rect x="28" y="60" width="430" height="274" fill="#fffdf6" stroke="#1f1f1f" stroke-width="2"/>
-  <rect x="28" y="60" width="430" height="32" fill="#2a2825"/>
-  <text x="44" y="81" class="mono" font-size="12" fill="#d5d1c7" letter-spacing="2">RENDER: MEMORY.CORE</text>
-  <text x="442" y="81" class="mono accent" font-size="12" text-anchor="end" letter-spacing="2">LIVE</text>
+  <rect x="46" y="92" width="232" height="232" fill="none" stroke="#111111" stroke-width="2"/>
+  <rect x="46" y="92" width="232" height="38" fill="#111111"/>
+  <text x="62" y="116" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f2f1ea" letter-spacing="2">MEMORY.NODE_GRAPH</text>
 
-  <rect x="44" y="108" width="398" height="194" fill="#0f0f10" stroke="#1f1f1f" stroke-width="1.5"/>
-  <line x1="243" y1="150" x2="243" y2="260" stroke="#2d2a26"/>
-  <line x1="188" y1="205" x2="298" y2="205" stroke="#2d2a26"/>
-  <line x1="202" y1="164" x2="284" y2="246" stroke="#2d2a26"/>
-  <line x1="284" y1="164" x2="202" y2="246" stroke="#2d2a26"/>
-  <circle cx="243" cy="150" r="4" fill="#ea580c"/>
-  <circle cx="243" cy="260" r="4" fill="#ea580c"/>
-  <circle cx="188" cy="205" r="4" fill="#ea580c"/>
-  <circle cx="298" cy="205" r="4" fill="#ea580c"/>
+  <circle cx="116" cy="188" r="10" fill="none" stroke="#111111" stroke-width="3"/>
+  <circle cx="198" cy="170" r="8" fill="none" stroke="#ea580c" stroke-width="3"/>
+  <circle cx="224" cy="238" r="9" fill="none" stroke="#111111" stroke-width="3"/>
+  <circle cx="148" cy="254" r="8" fill="none" stroke="#111111" stroke-width="3"/>
+  <circle cx="90" cy="244" r="7" fill="none" stroke="#ea580c" stroke-width="3"/>
+  <line x1="116" y1="188" x2="198" y2="170" stroke="#111111" stroke-width="3"/>
+  <line x1="198" y1="170" x2="224" y2="238" stroke="#111111" stroke-width="3"/>
+  <line x1="116" y1="188" x2="148" y2="254" stroke="#ea580c" stroke-width="3"/>
+  <line x1="90" y1="244" x2="148" y2="254" stroke="#111111" stroke-width="3"/>
+  <line x1="116" y1="188" x2="90" y2="244" stroke="#111111" stroke-width="3"/>
 
-  <text x="44" y="325" class="mono" font-size="11" fill="#5f5a52" letter-spacing="1.6">SIGNAL: FACTS + DECISIONS + CAUSAL CHAINS</text>
+  <text x="324" y="136" font-family="'JetBrains Mono', monospace" font-size="54" fill="#111111" font-weight="700" letter-spacing="1">AGENTICMEMORY</text>
+  <text x="324" y="172" font-family="'JetBrains Mono', monospace" font-size="18" fill="#ea580c" font-weight="700" letter-spacing="2">PERSISTENT COGNITIVE GRAPH MEMORY</text>
+  <text x="324" y="210" font-family="'JetBrains Mono', monospace" font-size="16" fill="#5f5c53">
+    Memory is graph navigation, not flat retrieval. Facts, decisions, inferences, corrections,
+  </text>
+  <text x="324" y="234" font-family="'JetBrains Mono', monospace" font-size="16" fill="#5f5c53">
+    skills, and episodes stay causally linked in one portable binary brain.
+  </text>
 
-  <line x1="480" y1="60" x2="480" y2="334" stroke="#1f1f1f" stroke-width="2"/>
-  <text x="520" y="132" class="sans ink" font-size="66" font-weight="700" letter-spacing="1">PERSISTENT</text>
-  <text x="520" y="195" class="sans accent" font-size="66" font-weight="700" letter-spacing="1">GRAPH MEMORY</text>
-
-  <text x="520" y="238" class="mono muted" font-size="22">Typed cognitive events, traversable reasoning, and</text>
-  <text x="520" y="268" class="mono muted" font-size="22">portable <tspan class="accent">.amem</tspan> memory artifacts.</text>
-
-  <line x1="520" y1="292" x2="1308" y2="292" stroke="#1f1f1f" stroke-width="2"/>
-  <text x="520" y="318" class="mono ink" font-size="12" letter-spacing="2">AGENTICMEMORY</text>
-  <text x="860" y="318" class="mono ink" font-size="12" letter-spacing="2">TRAVERSAL + IMPACT + DRIFT</text>
-  <circle cx="1308" cy="314" r="5" fill="#ea580c"/>
+  <rect x="324" y="258" width="154" height="34" fill="#111111"/>
+  <text x="344" y="280" font-family="'JetBrains Mono', monospace" font-size="12" fill="#f2f1ea" letter-spacing="2">MCP-NATIVE</text>
+  <rect x="488" y="258" width="146" height="34" fill="#111111"/>
+  <text x="508" y="280" font-family="'JetBrains Mono', monospace" font-size="12" fill="#f2f1ea" letter-spacing="2">PORTABLE</text>
+  <rect x="644" y="258" width="108" height="34" fill="#ea580c"/>
+  <text x="672" y="280" font-family="'JetBrains Mono', monospace" font-size="12" fill="#f2f1ea" letter-spacing="2">.AMEM</text>
 </svg>

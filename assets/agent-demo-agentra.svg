@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="520" viewBox="0 0 750 520" role="img" aria-label="AgenticMemory agent demo terminal in Agentra design system">
+  <defs>
+    <pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#c9c6bb"/>
+    </pattern>
+    <style><![CDATA[
+      .mono { font-family:'IBM Plex Mono','JetBrains Mono',monospace; }
+      .ink { fill:#121212; }
+      .muted { fill:#6d6a63; }
+      .accent { fill:#ea580c; }
+    ]]></style>
+  </defs>
+
+  <rect width="750" height="520" fill="#f2f1ea"/>
+  <rect width="750" height="520" fill="url(#grid)"/>
+  <line x1="16" y1="30" x2="734" y2="30" stroke="#1f1f1f"/>
+  <text x="16" y="22" class="mono muted" font-size="10" letter-spacing="1.8">// AGENT TRACE: MEMORY HANDOFF</text>
+
+  <rect x="20" y="44" width="710" height="456" fill="#fffdf6" stroke="#1f1f1f" stroke-width="2"/>
+  <rect x="20" y="44" width="710" height="36" fill="#2a2825"/>
+  <circle cx="42" cy="62" r="5" fill="#ef4444"/>
+  <circle cx="60" cy="62" r="5" fill="#f59e0b"/>
+  <circle cx="78" cy="62" r="5" fill="#22c55e"/>
+  <text x="710" y="66" class="mono" text-anchor="end" font-size="11" fill="#d8d4cb" letter-spacing="1.4">agentic-memory-mcp live</text>
+
+  <rect x="36" y="96" width="678" height="388" fill="#101012" stroke="#1f1f1f"/>
+
+  <text x="52" y="126" class="mono" font-size="16" fill="#f4f2eb">&gt; session_start "repo-refactor"</text>
+  <text x="52" y="154" class="mono" font-size="16" fill="#f4f2eb">&gt; memory_add fact "service timeout observed" confidence=0.92</text>
+  <text x="52" y="182" class="mono" font-size="16" fill="#f4f2eb">&gt; memory_add decision "increase pool size" rationale="queue saturation"</text>
+  <text x="52" y="210" class="mono" font-size="16" fill="#f4f2eb">&gt; memory_traverse decision_19 depth=3</text>
+  <text x="52" y="238" class="mono" font-size="16" fill="#ea580c">  caused_by -&gt; fact_02, fact_07, inference_03</text>
+  <text x="52" y="266" class="mono" font-size="16" fill="#f4f2eb">&gt; memory_impact fact_07</text>
+  <text x="52" y="294" class="mono" font-size="16" fill="#ea580c">  affected_nodes=12  high_risk=3  requires_recheck=true</text>
+  <text x="52" y="322" class="mono" font-size="16" fill="#f4f2eb">&gt; memory_resolve fact_07</text>
+  <text x="52" y="350" class="mono" font-size="16" fill="#f4f2eb">  current_truth="service uses adaptive pool controller"</text>
+  <text x="52" y="378" class="mono" font-size="16" fill="#f4f2eb">&gt; session_end</text>
+  <text x="52" y="418" class="mono" font-size="16" fill="#ea580c">state: persisted to ~/.brain.amem  |  sync: ready</text>
+
+  <line x1="52" y1="448" x2="698" y2="448" stroke="#3b3832"/>
+  <text x="52" y="470" class="mono" font-size="12" fill="#7f7a70" letter-spacing="1.2">DEMO: memory_add / traverse / impact / resolve</text>
+</svg>

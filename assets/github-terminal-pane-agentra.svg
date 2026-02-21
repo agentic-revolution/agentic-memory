@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 420" role="img" aria-label="AgenticMemory terminal pane in Agentra design system">
+  <defs>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#c9c6bb"/>
+    </pattern>
+    <style><![CDATA[
+      .mono { font-family:'IBM Plex Mono','JetBrains Mono',monospace; }
+      .ink { fill:#121212; }
+      .muted { fill:#6d6a63; }
+      .accent { fill:#ea580c; }
+    ]]></style>
+  </defs>
+
+  <rect width="1400" height="420" fill="#f2f1ea"/>
+  <rect width="1400" height="420" fill="url(#grid)"/>
+
+  <line x1="24" y1="34" x2="1376" y2="34" stroke="#1f1f1f"/>
+  <text x="24" y="25" class="mono muted" font-size="12" letter-spacing="2">// SECTION: RAW_MEMORY_STREAM</text>
+  <text x="1360" y="25" class="mono muted" font-size="12" text-anchor="end" letter-spacing="2">384x120</text>
+
+  <rect x="24" y="56" width="1352" height="338" fill="#fffdf6" stroke="#1f1f1f" stroke-width="2"/>
+
+  <rect x="24" y="56" width="1352" height="34" fill="#2a2825"/>
+  <text x="42" y="78" class="mono" font-size="12" fill="#d8d4cb" letter-spacing="2">TERMINAL.AMEM</text>
+  <circle cx="1328" cy="73" r="4" fill="#ea580c"/>
+
+  <rect x="40" y="106" width="760" height="198" fill="#0f0f10" stroke="#1f1f1f"/>
+  <text x="58" y="132" class="mono" font-size="21" fill="#f4f2eb">&gt; loading brain file: ~/.brain.amem</text>
+  <text x="58" y="162" class="mono" font-size="21" fill="#f4f2eb">&gt; indexing nodes: 100,000</text>
+  <text x="58" y="192" class="mono" font-size="21" fill="#f4f2eb">&gt; bm25 + vector hybrid active</text>
+  <text x="58" y="222" class="mono" font-size="21" fill="#f4f2eb">&gt; traversing reasoning chain: decision_448</text>
+  <text x="58" y="252" class="mono" font-size="21" fill="#f4f2eb">&gt; impact report generated: 17 dependent nodes</text>
+  <text x="58" y="282" class="mono" font-size="21" fill="#ea580c">&gt; state: online / portable / deterministic</text>
+
+  <rect x="818" y="106" width="542" height="198" fill="#fff8ea" stroke="#1f1f1f"/>
+  <text x="836" y="132" class="mono muted" font-size="12" letter-spacing="2">MEMORY.SIGNAL</text>
+  <line x1="836" y1="148" x2="1342" y2="148" stroke="#1f1f1f"/>
+  <text x="836" y="178" class="mono ink" font-size="18">FACT → DECISION → INFERENCE</text>
+  <text x="836" y="208" class="mono ink" font-size="18">CORRECTION chains preserve history</text>
+  <text x="836" y="238" class="mono ink" font-size="18">BELIEF revision computes blast radius</text>
+  <text x="836" y="268" class="mono ink" font-size="18">DRIFT analysis tracks model evolution</text>
+
+  <rect x="40" y="320" width="1320" height="58" fill="#fffdf6" stroke="#1f1f1f"/>
+  <text x="58" y="343" class="mono muted" font-size="12" letter-spacing="2">INFERENCE.METRICS</text>
+  <text x="58" y="367" class="mono ink" font-size="18">p99 query latency: <tspan class="accent" font-weight="700">&lt;1ms</tspan>  |  file: <tspan class="accent">.amem</tspan>  |  mode: mcp + cli</text>
+</svg>

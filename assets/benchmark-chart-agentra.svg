@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" role="img" aria-label="AgenticMemory benchmark chart in Agentra design system">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#c9c6bb"/>
+    </pattern>
+    <style><![CDATA[
+      .mono { font-family:'IBM Plex Mono','JetBrains Mono',monospace; }
+      .ink { fill:#121212; }
+      .muted { fill:#6d6a63; }
+      .accent { fill:#ea580c; }
+      .frame { fill:#fffdf6; stroke:#1f1f1f; stroke-width:2; }
+      .bar-fast { fill:#121212; }
+      .bar-mid { fill:#4f4a43; }
+      .bar-slow { fill:#ea580c; }
+    ]]></style>
+  </defs>
+
+  <rect width="820" height="420" fill="#f2f1ea"/>
+  <rect width="820" height="420" fill="url(#grid)"/>
+  <line x1="18" y1="28" x2="802" y2="28" stroke="#1f1f1f"/>
+  <text x="18" y="21" class="mono muted" font-size="11" letter-spacing="2">// BENCHMARK: QUERY LATENCY PROFILE</text>
+
+  <rect x="22" y="44" width="776" height="354" class="frame"/>
+  <line x1="110" y1="86" x2="110" y2="340" stroke="#1f1f1f"/>
+  <line x1="110" y1="340" x2="760" y2="340" stroke="#1f1f1f"/>
+
+  <text x="72" y="96" class="mono muted" font-size="10" text-anchor="end">200ms</text>
+  <text x="72" y="156" class="mono muted" font-size="10" text-anchor="end">100ms</text>
+  <text x="72" y="216" class="mono muted" font-size="10" text-anchor="end">10ms</text>
+  <text x="72" y="276" class="mono muted" font-size="10" text-anchor="end">1ms</text>
+  <text x="72" y="336" class="mono muted" font-size="10" text-anchor="end">0ms</text>
+
+  <rect x="150" y="313" width="76" height="27" class="bar-fast"/>
+  <rect x="260" y="287" width="76" height="53" class="bar-mid"/>
+  <rect x="370" y="258" width="76" height="82" class="bar-mid"/>
+  <rect x="480" y="191" width="76" height="149" class="bar-slow"/>
+  <rect x="590" y="170" width="76" height="170" class="bar-slow"/>
+
+  <text x="188" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">LOOKUP</text>
+  <text x="298" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">TRAVERSE</text>
+  <text x="408" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">HYBRID</text>
+  <text x="518" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">REVISION</text>
+  <text x="628" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">DRIFT</text>
+
+  <text x="44" y="377" class="mono muted" font-size="11" letter-spacing="1.5">FAST PATH: SUB-MILLISECOND LOOKUPS | HEAVY PATH: OFFLINE ANALYSIS QUERIES</text>
+  <line x1="44" y1="384" x2="776" y2="384" stroke="#1f1f1f"/>
+  <text x="44" y="398" class="mono ink" font-size="12" letter-spacing="1.2">REFERENCE: CRITERION RUNS ON APPLE M4 PRO, RUST RELEASE MODE</text>
+  <circle cx="776" cy="394" r="4" class="accent"/>
+</svg>

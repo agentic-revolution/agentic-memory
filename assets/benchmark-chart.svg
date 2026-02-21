@@ -1,49 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" role="img" aria-label="AgenticMemory benchmark chart in Agentra design system">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420">
   <defs>
-    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1" fill="#c9c6bb"/>
-    </pattern>
-    <style><![CDATA[
-      .mono { font-family:'IBM Plex Mono','JetBrains Mono',monospace; }
-      .ink { fill:#121212; }
-      .muted { fill:#6d6a63; }
-      .accent { fill:#ea580c; }
-      .frame { fill:#fffdf6; stroke:#1f1f1f; stroke-width:2; }
-      .bar-fast { fill:#121212; }
-      .bar-mid { fill:#4f4a43; }
-      .bar-slow { fill:#ea580c; }
-    ]]></style>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F172A"/><stop offset="100%" style="stop-color:#1E293B"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3B82F6"/><stop offset="100%" style="stop-color:#60A5FA"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14B8A6"/><stop offset="100%" style="stop-color:#2DD4BF"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8B5CF6"/><stop offset="100%" style="stop-color:#A78BFA"/>
+    </linearGradient>
+    <linearGradient id="bar4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22C55E"/><stop offset="100%" style="stop-color:#4ADE80"/>
+    </linearGradient>
+    <linearGradient id="bar5" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F59E0B"/><stop offset="100%" style="stop-color:#FBBF24"/>
+    </linearGradient>
   </defs>
+  
+  <rect width="820" height="420" fill="url(#bg3)" rx="12"/>
+  
+  <!-- Title -->
+  <text x="410" y="30" text-anchor="middle" fill="#F8FAFC" font-family="'SF Mono',monospace" font-size="14" font-weight="700" letter-spacing="2">BENCHMARK RESULTS</text>
+  <text x="410" y="48" text-anchor="middle" fill="#64748B" font-family="'SF Mono',monospace" font-size="10">Rust core · 100K node graph · real measurements · v0.2.0</text>
 
-  <rect width="820" height="420" fill="#f2f1ea"/>
-  <rect width="820" height="420" fill="url(#grid)"/>
-  <line x1="18" y1="28" x2="802" y2="28" stroke="#1f1f1f"/>
-  <text x="18" y="21" class="mono muted" font-size="11" letter-spacing="2">// BENCHMARK: QUERY LATENCY PROFILE</text>
+  <!-- Chart area -->
+  <g transform="translate(250, 66)">
+    <!-- Row 1: Add node -->
+    <text x="-10" y="18" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">Add node</text>
+    <rect x="0" y="5" width="6" height="20" rx="3" fill="url(#bar1)"/>
+    <text x="16" y="20" fill="#3B82F6" font-family="'SF Mono',monospace" font-size="11" font-weight="700">276 ns</text>
+    
+    <!-- Row 2: Add edge -->
+    <text x="-10" y="54" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">Add edge</text>
+    <rect x="0" y="41" width="32" height="20" rx="3" fill="url(#bar1)"/>
+    <text x="42" y="56" fill="#3B82F6" font-family="'SF Mono',monospace" font-size="11" font-weight="700">1.2 ms</text>
+    
+    <!-- Row 3: Traverse -->
+    <text x="-10" y="90" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">Traverse (depth 5)</text>
+    <rect x="0" y="77" width="90" height="20" rx="3" fill="url(#bar2)"/>
+    <text x="100" y="92" fill="#14B8A6" font-family="'SF Mono',monospace" font-size="11" font-weight="700">3.4 ms</text>
+    
+    <!-- Row 4: Similarity -->
+    <text x="-10" y="126" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">Similarity (top 10)</text>
+    <rect x="0" y="113" width="237" height="20" rx="3" fill="url(#bar3)"/>
+    <text x="247" y="128" fill="#8B5CF6" font-family="'SF Mono',monospace" font-size="11" font-weight="700">9.0 ms</text>
 
-  <rect x="22" y="44" width="776" height="354" class="frame"/>
-  <line x1="110" y1="86" x2="110" y2="340" stroke="#1f1f1f"/>
-  <line x1="110" y1="340" x2="760" y2="340" stroke="#1f1f1f"/>
+    <!-- Row 5: BM25 search (NEW) -->
+    <text x="-10" y="162" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">BM25 search</text>
+    <rect x="0" y="149" width="42" height="20" rx="3" fill="url(#bar4)"/>
+    <text x="52" y="164" fill="#22C55E" font-family="'SF Mono',monospace" font-size="11" font-weight="700">1.58 ms</text>
+    <text x="120" y="164" fill="#475569" font-family="'SF Mono',monospace" font-size="9">NEW</text>
 
-  <text x="72" y="96" class="mono muted" font-size="10" text-anchor="end">200ms</text>
-  <text x="72" y="156" class="mono muted" font-size="10" text-anchor="end">100ms</text>
-  <text x="72" y="216" class="mono muted" font-size="10" text-anchor="end">10ms</text>
-  <text x="72" y="276" class="mono muted" font-size="10" text-anchor="end">1ms</text>
-  <text x="72" y="336" class="mono muted" font-size="10" text-anchor="end">0ms</text>
+    <!-- Row 6: Hybrid search (NEW) -->
+    <text x="-10" y="198" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">Hybrid (BM25+vec)</text>
+    <rect x="0" y="185" width="285" height="20" rx="3" fill="url(#bar5)"/>
+    <text x="295" y="200" fill="#F59E0B" font-family="'SF Mono',monospace" font-size="11" font-weight="700">10.83 ms</text>
+    <text x="424" y="200" fill="#475569" font-family="'SF Mono',monospace" font-size="9">NEW</text>
+    
+    <!-- Row 7: Write -->
+    <text x="-10" y="234" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">Write 10K to file</text>
+    <rect x="0" y="221" width="436" height="20" rx="3" fill="url(#bar1)" opacity="0.6"/>
+    <text x="446" y="236" fill="#60A5FA" font-family="'SF Mono',monospace" font-size="11" font-weight="700">32.6 ms</text>
+    
+    <!-- Row 8: Read -->
+    <text x="-10" y="270" text-anchor="end" fill="#CBD5E1" font-family="'SF Mono',monospace" font-size="11">Read 10K from file</text>
+    <rect x="0" y="257" width="98" height="20" rx="3" fill="url(#bar2)" opacity="0.6"/>
+    <text x="108" y="272" fill="#2DD4BF" font-family="'SF Mono',monospace" font-size="11" font-weight="700">3.7 ms</text>
+  </g>
 
-  <rect x="150" y="313" width="76" height="27" class="bar-fast"/>
-  <rect x="260" y="287" width="76" height="53" class="bar-mid"/>
-  <rect x="370" y="258" width="76" height="82" class="bar-mid"/>
-  <rect x="480" y="191" width="76" height="149" class="bar-slow"/>
-  <rect x="590" y="170" width="76" height="170" class="bar-slow"/>
+  <!-- Footer stats -->
+  <g transform="translate(0, 375)">
+    <rect x="40" y="0" width="740" height="1" fill="#1E293B"/>
+    
+    <text x="130" y="25" text-anchor="middle" fill="#3B82F6" font-family="'SF Mono',monospace" font-size="18" font-weight="700">440</text>
+    <text x="130" y="39" text-anchor="middle" fill="#64748B" font-family="'SF Mono',monospace" font-size="9">tests passing</text>
+    
+    <text x="290" y="25" text-anchor="middle" fill="#14B8A6" font-family="'SF Mono',monospace" font-size="18" font-weight="700">16</text>
+    <text x="290" y="39" text-anchor="middle" fill="#64748B" font-family="'SF Mono',monospace" font-size="9">query types</text>
+    
+    <text x="450" y="25" text-anchor="middle" fill="#8B5CF6" font-family="'SF Mono',monospace" font-size="18" font-weight="700">&lt;1ms</text>
+    <text x="450" y="39" text-anchor="middle" fill="#64748B" font-family="'SF Mono',monospace" font-size="9">query latency</text>
+    
+    <text x="610" y="25" text-anchor="middle" fill="#22C55E" font-family="'SF Mono',monospace" font-size="18" font-weight="700">~8MB</text>
+    <text x="610" y="39" text-anchor="middle" fill="#64748B" font-family="'SF Mono',monospace" font-size="9">per 10K events</text>
 
-  <text x="188" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">LOOKUP</text>
-  <text x="298" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">TRAVERSE</text>
-  <text x="408" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">HYBRID</text>
-  <text x="518" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">REVISION</text>
-  <text x="628" y="360" class="mono ink" font-size="10" text-anchor="middle" letter-spacing="1">DRIFT</text>
-
-  <text x="44" y="377" class="mono muted" font-size="11" letter-spacing="1.5">FAST PATH: SUB-MILLISECOND LOOKUPS | HEAVY PATH: OFFLINE ANALYSIS QUERIES</text>
-  <line x1="44" y1="384" x2="776" y2="384" stroke="#1f1f1f"/>
-  <text x="44" y="398" class="mono ink" font-size="12" letter-spacing="1.2">REFERENCE: CRITERION RUNS ON APPLE M4 PRO, RUST RELEASE MODE</text>
-  <circle cx="776" cy="394" r="4" class="accent"/>
+    <text x="740" y="25" text-anchor="middle" fill="#F59E0B" font-family="'SF Mono',monospace" font-size="18" font-weight="700">0</text>
+    <text x="740" y="39" text-anchor="middle" fill="#64748B" font-family="'SF Mono',monospace" font-size="9">dependencies</text>
+  </g>
 </svg>
