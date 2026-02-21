@@ -7,7 +7,7 @@ on:
       - "scripts/install.sh"
       - "scripts/check-install-commands.sh"
       - "scripts/check-canonical-sister.sh"
-      - "docs/internal/CANONICAL_SISTER_KIT.md"
+      - "docs/ecosystem/CANONICAL_SISTER_KIT.md"
       - "templates/sister-bootstrap/**"
       - ".github/workflows/canonical-sister-guardrails.yml"
   pull_request:
@@ -16,7 +16,7 @@ on:
       - "scripts/install.sh"
       - "scripts/check-install-commands.sh"
       - "scripts/check-canonical-sister.sh"
-      - "docs/internal/CANONICAL_SISTER_KIT.md"
+      - "docs/ecosystem/CANONICAL_SISTER_KIT.md"
       - "templates/sister-bootstrap/**"
       - ".github/workflows/canonical-sister-guardrails.yml"
 

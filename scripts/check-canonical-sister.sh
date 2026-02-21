@@ -39,10 +39,21 @@ assert_image_spacing() {
   done < <(grep -n '<img src="assets/' README.md || true)
 }
 
-assert_file "docs/internal/CANONICAL_SISTER_KIT.md"
+assert_file "docs/ecosystem/CANONICAL_SISTER_KIT.md"
 assert_file "templates/sister-bootstrap/README.template.md"
 assert_file "scripts/install.sh"
 assert_file "scripts/check-install-commands.sh"
+
+assert_contains '## 1. Release Artifact Contract' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 2. Install Contract Spec' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 3. Reusable CI Guardrails' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 4. README Canonical Layout' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 5. MCP Canonical Profile' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 6. Packaging Policy' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 7. Versioning and Release Policy' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 8. Design Asset Contract' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 9. Env Var Namespace Contract' docs/ecosystem/CANONICAL_SISTER_KIT.md
+assert_contains '## 10. New-Sister Bootstrap' docs/ecosystem/CANONICAL_SISTER_KIT.md
 
 assert_contains '<img src="assets/github-hero-pane.svg"' README.md
 assert_contains '<img src="assets/github-terminal-pane.svg"' README.md
