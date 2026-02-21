@@ -52,12 +52,6 @@ Six lines. Sixteen query types. One file holds everything. Works with Claude, GP
 
 ---
 
-<p align="center">
-  <img src="assets/brain-graph.svg" alt="Cognitive event graph with typed nodes, causal edges, and belief revision" width="800">
-</p>
-
----
-
 <a name="benchmarks"></a>
 
 ## Benchmarks
@@ -403,6 +397,10 @@ response = MemoryAgent(brain, OpenAIProvider()).chat(
 ## How It Works
 
 AgenticMemory stores knowledge as a **typed cognitive event graph** in a custom binary format.
+
+<p align="center">
+  <img src="assets/brain-graph.svg" alt="Cognitive event graph with typed nodes, causal edges, and belief revision" width="800">
+</p>
 
 **Nodes** are cognitive events -- six types:
 
