@@ -34,6 +34,13 @@ assert_contains() {
   fi
 }
 
+http_ok() {
+  local url="$1"
+  curl -fsSL --retry 3 --retry-delay 1 --retry-connrefused \
+    -A "agentra-install-guardrails/1.0 (+https://agentralabs.tech)" \
+    "$url" >/dev/null
+}
+
 # Front-facing command requirements
 assert_contains "curl -fsSL https://agentralabs.tech/install/memory | bash" README.md docs/quickstart.md
 assert_contains "cargo install agentic-memory agentic-memory-mcp" README.md
@@ -48,11 +55,11 @@ fi
 bash -n scripts/install.sh
 bash scripts/install.sh --dry-run >/dev/null
 
-# Public endpoint/package health
-curl -fsSL https://agentralabs.tech/install/memory >/dev/null
-curl -fsSL https://crates.io/api/v1/crates/agentic-memory >/dev/null
-curl -fsSL https://crates.io/api/v1/crates/agentic-memory-mcp >/dev/null
-curl -fsSL https://pypi.org/pypi/agentic-brain/json >/dev/null
-curl -fsSL https://pypi.org/pypi/amem-installer/json >/dev/null
+# Public package/repo health (stable URLs for CI)
+http_ok https://raw.githubusercontent.com/agentralabs/agentic-memory/main/scripts/install.sh
+http_ok https://crates.io/api/v1/crates/agentic-memory
+http_ok https://crates.io/api/v1/crates/agentic-memory-mcp
+http_ok https://pypi.org/pypi/agentic-brain/json
+http_ok https://pypi.org/pypi/amem-installer/json
 
 echo "Install command guardrails passed (memory)."
