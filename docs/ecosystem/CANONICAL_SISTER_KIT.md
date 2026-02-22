@@ -15,8 +15,11 @@ This document is the single baseline contract for all current and future sisters
 
 ## 2. Install Contract Spec
 
-- Canonical one-liner is required:
-  - `curl -fsSL https://agentralabs.tech/install/<target> | bash`
+- Canonical install surfaces are required:
+  - `curl -fsSL https://agentralabs.tech/install/<target> | bash` (backward-compatible default; desktop profile)
+  - `curl -fsSL https://agentralabs.tech/install/<target>/desktop | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target>/terminal | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target>/server | bash`
 - Installer must attempt release artifact install first; source build fallback is required.
 - MCP config behavior is merge-only, never destructive overwrite.
 - Installer must print a consistent completion block:

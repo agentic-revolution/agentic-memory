@@ -12,6 +12,19 @@ curl -fsSL https://agentralabs.tech/install/memory | bash
 
 Installs release binaries and configures the MCP bridge for local desktop clients.
 
+### Environment-specific installers
+
+```bash
+# Desktop MCP clients
+curl -fsSL https://agentralabs.tech/install/memory/desktop | bash
+
+# Terminal-only (no desktop config writes)
+curl -fsSL https://agentralabs.tech/install/memory/terminal | bash
+
+# Remote/server host (no desktop config writes)
+curl -fsSL https://agentralabs.tech/install/memory/server | bash
+```
+
 ### Python SDK
 
 ```bash

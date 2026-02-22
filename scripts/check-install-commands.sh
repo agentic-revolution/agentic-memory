@@ -43,6 +43,9 @@ http_ok() {
 
 # Front-facing command requirements
 assert_contains "curl -fsSL https://agentralabs.tech/install/memory | bash" README.md docs/quickstart.md
+assert_contains "curl -fsSL https://agentralabs.tech/install/memory/desktop | bash" README.md docs/quickstart.md INSTALL.md
+assert_contains "curl -fsSL https://agentralabs.tech/install/memory/terminal | bash" README.md docs/quickstart.md INSTALL.md
+assert_contains "curl -fsSL https://agentralabs.tech/install/memory/server | bash" README.md docs/quickstart.md INSTALL.md
 assert_contains "cargo install agentic-memory agentic-memory-mcp" README.md
 assert_contains "pip install amem-installer && amem-install install --auto" README.md
 
@@ -54,6 +57,9 @@ fi
 # Installer health
 bash -n scripts/install.sh
 bash scripts/install.sh --dry-run >/dev/null
+bash scripts/install.sh --profile=desktop --dry-run >/dev/null
+bash scripts/install.sh --profile=terminal --dry-run >/dev/null
+bash scripts/install.sh --profile=server --dry-run >/dev/null
 
 # Public package/repo health (stable URLs for CI)
 http_ok https://raw.githubusercontent.com/agentralabs/agentic-memory/main/scripts/install.sh

@@ -8,6 +8,7 @@
 # Options:
 #   --version=X.Y.Z   Pin a specific version (default: latest)
 #   --dir=/path        Override install directory (default: ~/.local/bin)
+#   --profile=<name>   Install profile: desktop | terminal | server (default: desktop)
 #   --dry-run          Print actions without executing
 #
 # What it does:
@@ -25,6 +26,7 @@ BINARY_NAME="agentic-memory-mcp"
 SERVER_KEY="agentic-memory"
 INSTALL_DIR="$HOME/.local/bin"
 VERSION="latest"
+PROFILE="${AGENTRA_INSTALL_PROFILE:-desktop}"
 DRY_RUN=false
 CLAUDE_DESKTOP_CONFIGURED=false
 CLAUDE_CODE_CONFIGURED=false
@@ -34,13 +36,24 @@ for arg in "$@"; do
     case "$arg" in
         --version=*) VERSION="${arg#*=}" ;;
         --dir=*)     INSTALL_DIR="${arg#*=}" ;;
+        --profile=*) PROFILE="${arg#*=}" ;;
         --dry-run)   DRY_RUN=true ;;
         --help|-h)
-            echo "Usage: install.sh [--version=X.Y.Z] [--dir=/path] [--dry-run]"
+            echo "Usage: install.sh [--version=X.Y.Z] [--dir=/path] [--profile=desktop|terminal|server] [--dry-run]"
             exit 0
             ;;
     esac
 done
+
+validate_profile() {
+    case "$PROFILE" in
+        desktop|terminal|server) ;;
+        *)
+            echo "Error: invalid profile '${PROFILE}'. Use desktop, terminal, or server." >&2
+            exit 1
+            ;;
+    esac
+}
 
 # ── Detect platform ───────────────────────────────────────────────────
 detect_platform() {
@@ -237,6 +250,39 @@ print_client_help() {
     echo "  (Ctrl+C to stop after startup check)"
 }
 
+print_profile_help() {
+    echo ""
+    echo "Install profile: ${PROFILE}"
+    case "$PROFILE" in
+        desktop)
+            echo "  - Binary installed"
+            echo "  - Claude Desktop and Claude Code MCP configs merged (when detected)"
+            ;;
+        terminal)
+            echo "  - Binary installed"
+            echo "  - No desktop config files were changed"
+            echo "  - Use amem directly or wire MCP manually"
+            ;;
+        server)
+            echo "  - Binary installed"
+            echo "  - No desktop config files were changed"
+            echo "  - Suitable for remote/server hosts"
+            ;;
+    esac
+}
+
+print_terminal_server_help() {
+    echo ""
+    echo "Manual MCP config for any client:"
+    echo "  command: ${INSTALL_DIR}/${BINARY_NAME}"
+    echo "  args: [\"serve\"]"
+    echo ""
+    echo "Quick terminal checks:"
+    echo "  ${INSTALL_DIR}/amem --help"
+    echo "  ${INSTALL_DIR}/${BINARY_NAME} serve"
+    echo "  (Ctrl+C to stop after startup check)"
+}
+
 # ── Check PATH ────────────────────────────────────────────────────────
 check_path() {
     if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
@@ -259,6 +305,8 @@ main() {
     local platform
     platform="$(detect_platform)"
     echo "Platform: ${platform}"
+    validate_profile
+    echo "Profile: ${PROFILE}"
 
     local installed_from_release=false
     if [ "$VERSION" = "latest" ]; then
@@ -280,15 +328,23 @@ main() {
         install_from_source
     fi
 
-    echo ""
-    echo "Configuring MCP clients..."
-    configure_claude_desktop
-    configure_claude_code
-    print_client_help
+    if [ "$PROFILE" = "desktop" ]; then
+        echo ""
+        echo "Configuring MCP clients..."
+        configure_claude_desktop
+        configure_claude_code
+        print_client_help
+    else
+        print_terminal_server_help
+    fi
+
+    print_profile_help
 
     echo ""
     echo "Done! Memory defaults to ~/.brain.amem"
-    echo "Restart any configured MCP client to activate."
+    if [ "$PROFILE" = "desktop" ]; then
+        echo "Restart any configured MCP client to activate."
+    fi
 
     check_path
 }

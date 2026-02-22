@@ -8,6 +8,19 @@ curl -fsSL https://agentralabs.tech/install/memory | bash
 
 Downloads a pre-built `agentic-memory-mcp` binary, installs to `~/.local/bin/`, and merges the MCP server config into Claude Desktop and Claude Code. Memory defaults to `~/.brain.amem`. Requires `curl` and `jq`.
 
+### Install by environment
+
+```bash
+# Desktop MCP clients (auto-merge Claude configs)
+curl -fsSL https://agentralabs.tech/install/memory/desktop | bash
+
+# Terminal-only (no desktop config writes)
+curl -fsSL https://agentralabs.tech/install/memory/terminal | bash
+
+# Remote/server host (no desktop config writes)
+curl -fsSL https://agentralabs.tech/install/memory/server | bash
+```
+
 ---
 
 ## 1. Python SDK (recommended for most users)

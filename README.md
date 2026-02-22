@@ -188,7 +188,7 @@ report = brain.drift("preferred language")
 
 ## Install
 
-**One-liner** (downloads binary + configures Claude):
+**One-liner** (desktop profile, backwards-compatible):
 ```bash
 curl -fsSL https://agentralabs.tech/install/memory | bash
 ```
@@ -196,9 +196,24 @@ curl -fsSL https://agentralabs.tech/install/memory | bash
 Downloads a pre-built `agentic-memory-mcp` binary to `~/.local/bin/` and merges the MCP server into your Claude Desktop and Claude Code configs. Memory defaults to `~/.brain.amem`. Requires `curl` and `jq`.
 If release artifacts are not available, the installer automatically falls back to `cargo install --git` source install.
 
+**Environment profiles** (one command per environment):
+```bash
+# Desktop MCP clients (auto-merge Claude Desktop + Claude Code when detected)
+curl -fsSL https://agentralabs.tech/install/memory/desktop | bash
+
+# Terminal-only (no desktop config writes)
+curl -fsSL https://agentralabs.tech/install/memory/terminal | bash
+
+# Remote/server hosts (no desktop config writes)
+curl -fsSL https://agentralabs.tech/install/memory/server | bash
+```
+
 | Channel | Command | Result |
 |:---|:---|:---|
 | GitHub installer (official) | `curl -fsSL https://agentralabs.tech/install/memory \| bash` | Installs release binaries when available, otherwise source fallback; merges MCP config |
+| GitHub installer (desktop profile) | `curl -fsSL https://agentralabs.tech/install/memory/desktop \| bash` | Explicit desktop profile behavior |
+| GitHub installer (terminal profile) | `curl -fsSL https://agentralabs.tech/install/memory/terminal \| bash` | Installs binaries only; no desktop config writes |
+| GitHub installer (server profile) | `curl -fsSL https://agentralabs.tech/install/memory/server \| bash` | Installs binaries only; server-safe behavior |
 | crates.io paired crates (official) | `cargo install agentic-memory agentic-memory-mcp` | Installs `amem` and `agentic-memory-mcp` |
 | PyPI (SDK + installer) | `pip install agentic-brain` / `pip install amem-installer` | Python SDK and auto-connector tools |
 
