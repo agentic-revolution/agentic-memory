@@ -46,7 +46,17 @@ Section text.
 <a name="install"></a>
 ## Install
 
-Install text.
+Standalone by default: <Project> is independently installable and operable. Other sisters and `agentra` are optional.
+
+```bash
+curl -fsSL https://agentralabs.tech/install/<target> | bash
+```
+
+```bash
+curl -fsSL https://agentralabs.tech/install/<target>/desktop | bash
+curl -fsSL https://agentralabs.tech/install/<target>/terminal | bash
+curl -fsSL https://agentralabs.tech/install/<target>/server | bash
+```
 
 ---
 
@@ -60,3 +70,14 @@ Quickstart text.
 ## How It Works
 
 System explanation.
+
+---
+
+## Workspace UX (Optional)
+
+From `agentralabs-tech` root:
+
+```bash
+cargo run --bin agentra status
+cargo run --bin agentra ui
+```

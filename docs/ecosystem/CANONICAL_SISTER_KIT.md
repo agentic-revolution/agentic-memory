@@ -26,6 +26,7 @@ This document is the single baseline contract for all current and future sisters
   - MCP client summary
   - generic MCP guidance (Codex/Cursor/Windsurf/VS Code/Cline/any MCP client)
   - quick terminal test command
+- README install docs must include an explicit standalone guarantee and preserve install parity with installer output.
 
 ## 3. Reusable CI Guardrails
 
@@ -102,7 +103,21 @@ This document is the single baseline contract for all current and future sisters
   - install guardrail script + workflow
   - canonical sister guardrail script + workflow
   - docs stubs for install/quickstart/integration
+- New sister README scaffolds must include:
+  - standalone guarantee copy
+  - all profile install commands (`default`, `desktop`, `terminal`, `server`)
+  - optional workspace UX notes for `agentra` status/UI
 - A new sister is not release-ready until all above checks pass.
+
+## 11. Workspace Orchestrator Contract
+
+- Sisters remain independently installable and operable.
+- `agentra` (or any future orchestrator) is optional UX only and must not become a hard runtime dependency.
+- Orchestrator UX must capability-detect sister tooling and report missing tools as actionable `MISSING` states.
+- Orchestrator UX may provide hints and status, but must not silently rewrite sister config or force bundled installs.
+- If a shared Rust workspace exists, root `Cargo.toml` must declare all sister members and keep workspace commands functional:
+  - `cargo run --bin agentra status`
+  - `cargo run --bin agentra ui`
 
 ## Change Control
 
