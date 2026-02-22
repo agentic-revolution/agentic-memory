@@ -106,7 +106,8 @@ impl StdioTransport {
         match framing::parse_message(input.trim()) {
             Ok(msg) => {
                 if let Some(response) = self.handler.handle_message(msg).await {
-                    self.write_response(stdout, &response, framed_output).await?;
+                    self.write_response(stdout, &response, framed_output)
+                        .await?;
                 }
             }
             Err(e) => {
