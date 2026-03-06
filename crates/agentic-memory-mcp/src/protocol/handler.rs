@@ -9,10 +9,10 @@ use serde_json::{json, Value};
 use crate::prompts::PromptRegistry;
 use crate::resources::ResourceRegistry;
 use crate::session::SessionManager;
-use crate::tools::ToolRegistry;
-use crate::types::*;
 #[cfg(feature = "v3")]
 use crate::tools::v3_tools::{self, SharedEngine};
+use crate::tools::ToolRegistry;
+use crate::types::*;
 #[cfg(feature = "v3")]
 use crate::v3_auto_capture::AutoCaptureMiddleware;
 #[cfg(feature = "v3")]
@@ -333,7 +333,13 @@ impl ProtocolHandler {
                     return Err(e);
                 }
                 Some(Err(e)) => ToolCallResult::error(e.to_string()),
-                None => match ToolRegistry::call(&call_params.name, call_params.arguments, &self.session).await {
+                None => match ToolRegistry::call(
+                    &call_params.name,
+                    call_params.arguments,
+                    &self.session,
+                )
+                .await
+                {
                     Ok(r) => r,
                     Err(e) if e.is_protocol_error() => {
                         #[cfg(feature = "v3")]
@@ -358,7 +364,8 @@ impl ProtocolHandler {
             .on_tool_result(
                 &call_params.name,
                 tool_input.clone(),
-                serde_json::to_value(&result).unwrap_or_else(|_| json!({"error": "serialize_failed"})),
+                serde_json::to_value(&result)
+                    .unwrap_or_else(|_| json!({"error": "serialize_failed"})),
                 started.elapsed().as_millis() as u64,
                 !result.is_error.unwrap_or(false),
             )
@@ -509,8 +516,7 @@ impl ProtocolHandler {
         let detail = first_text_content(&result.content)
             .map(|v| truncate_for_log(v, 220))
             .unwrap_or_else(|| "no textual output".to_string());
-        let agent_response =
-            format!("tool={tool_name} success={success} detail={detail}");
+        let agent_response = format!("tool={tool_name} success={success} detail={detail}");
 
         let _ = crate::tools::conversation_log::execute(
             json!({
@@ -614,7 +620,13 @@ fn collect_string_fields(
                 if out.len() >= max_items {
                     break;
                 }
-                collect_string_fields(item, &format!("{path}[{idx}]"), out, preferred_keys, max_items);
+                collect_string_fields(
+                    item,
+                    &format!("{path}[{idx}]"),
+                    out,
+                    preferred_keys,
+                    max_items,
+                );
             }
         }
         _ => {}
