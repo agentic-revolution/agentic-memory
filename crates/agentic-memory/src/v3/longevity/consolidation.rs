@@ -160,7 +160,8 @@ impl ConsolidationEngine {
                     let compressible: Vec<&&MemoryRecord> = group
                         .iter()
                         .filter(|m| {
-                            m.significance.max(self.scorer.score_simple(m)) <= preservation_threshold
+                            m.significance.max(self.scorer.score_simple(m))
+                                <= preservation_threshold
                         })
                         .collect();
 
@@ -371,8 +372,14 @@ impl ConsolidationEngine {
 
         let time_range = format!(
             "{} to {}",
-            episodes.first().map(|e| e.created_at.as_str()).unwrap_or("?"),
-            episodes.last().map(|e| e.created_at.as_str()).unwrap_or("?"),
+            episodes
+                .first()
+                .map(|e| e.created_at.as_str())
+                .unwrap_or("?"),
+            episodes
+                .last()
+                .map(|e| e.created_at.as_str())
+                .unwrap_or("?"),
         );
 
         serde_json::json!({

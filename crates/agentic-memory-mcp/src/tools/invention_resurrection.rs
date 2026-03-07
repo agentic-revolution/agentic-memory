@@ -965,7 +965,11 @@ pub async fn execute_phoenix_gather(
             .iter()
             .filter(|n| n.confidence >= 0.8)
             .collect();
-        high_conf.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap_or(std::cmp::Ordering::Equal));
+        high_conf.sort_by(|a, b| {
+            b.confidence
+                .partial_cmp(&a.confidence)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
         for node in high_conf.iter().take(max_traces / 3) {
             traces.push(json!({
                 "trace_type": "HighConfidenceNode",

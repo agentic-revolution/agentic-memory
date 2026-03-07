@@ -214,7 +214,10 @@ impl ClientLogMonitor {
                             let texts: Vec<String> = arr
                                 .iter()
                                 .filter_map(|block| {
-                                    block.get("text").and_then(|t| t.as_str()).map(|s| s.to_string())
+                                    block
+                                        .get("text")
+                                        .and_then(|t| t.as_str())
+                                        .map(|s| s.to_string())
                                 })
                                 .collect();
                             if texts.is_empty() {
@@ -230,9 +233,7 @@ impl ClientLogMonitor {
                     let timestamp = entry
                         .get("timestamp")
                         .and_then(|v| v.as_u64())
-                        .unwrap_or_else(|| {
-                            chrono::Utc::now().timestamp_millis() as u64
-                        });
+                        .unwrap_or_else(|| chrono::Utc::now().timestamp_millis() as u64);
 
                     events.push(CaptureEvent {
                         role,

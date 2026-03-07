@@ -560,7 +560,11 @@ pub async fn execute_crystal_create(
             .filter(|n| include_types.contains(&n.event_type.name().to_string()))
             .collect()
     };
-    crystal_nodes.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap_or(std::cmp::Ordering::Equal));
+    crystal_nodes.sort_by(|a, b| {
+        b.confidence
+            .partial_cmp(&a.confidence)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
 
     // Extract patterns
     let mut word_freq: HashMap<String, usize> = HashMap::new();
@@ -964,7 +968,11 @@ pub async fn execute_transcend_eternal(
     let preserved: Vec<Value> = if node_ids.is_empty() {
         // Auto-select highest confidence nodes
         let mut sorted: Vec<&_> = graph.nodes().iter().collect();
-        sorted.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap_or(std::cmp::Ordering::Equal));
+        sorted.sort_by(|a, b| {
+            b.confidence
+                .partial_cmp(&a.confidence)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
         sorted
             .iter()
             .take(10)

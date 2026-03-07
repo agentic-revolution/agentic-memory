@@ -51,10 +51,7 @@ pub struct EncryptionRotator;
 
 impl EncryptionRotator {
     /// Generate and store a new active key, retiring the current one.
-    pub fn rotate_key(
-        store: &LongevityStore,
-        algorithm: &str,
-    ) -> Result<String, LongevityError> {
+    pub fn rotate_key(store: &LongevityStore, algorithm: &str) -> Result<String, LongevityError> {
         // Retire current active key
         if let Some(current) = store.get_active_encryption_key()? {
             store.retire_encryption_key(&current.key_id)?;

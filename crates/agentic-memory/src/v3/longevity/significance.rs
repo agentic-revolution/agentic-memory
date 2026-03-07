@@ -292,18 +292,50 @@ impl SignificanceScorer {
 
         // Simple keyword-based emotional detection
         let positive_markers = [
-            "love", "great", "excellent", "perfect", "amazing", "beautiful",
-            "brilliant", "fantastic", "wonderful", "excited", "happy",
-            "important", "critical", "essential", "breakthrough", "success",
+            "love",
+            "great",
+            "excellent",
+            "perfect",
+            "amazing",
+            "beautiful",
+            "brilliant",
+            "fantastic",
+            "wonderful",
+            "excited",
+            "happy",
+            "important",
+            "critical",
+            "essential",
+            "breakthrough",
+            "success",
         ];
         let negative_markers = [
-            "hate", "terrible", "awful", "frustrated", "angry", "annoyed",
-            "broken", "failed", "bug", "error", "crash", "disaster",
-            "urgent", "blocker", "regression",
+            "hate",
+            "terrible",
+            "awful",
+            "frustrated",
+            "angry",
+            "annoyed",
+            "broken",
+            "failed",
+            "bug",
+            "error",
+            "crash",
+            "disaster",
+            "urgent",
+            "blocker",
+            "regression",
         ];
         let emphasis_markers = [
-            "!", "IMPORTANT", "CRITICAL", "NOTE", "WARNING", "NEVER",
-            "ALWAYS", "MUST", "!!!",
+            "!",
+            "IMPORTANT",
+            "CRITICAL",
+            "NOTE",
+            "WARNING",
+            "NEVER",
+            "ALWAYS",
+            "MUST",
+            "!!!",
         ];
 
         let mut score: f64 = 0.0;

@@ -627,11 +627,14 @@ mod tests {
     #[test]
     fn writes_header_and_entries() {
         let dir = tempdir().unwrap_or_else(|_| Default::default());
-        let mut capture = TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
+        let mut capture =
+            TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
         capture
             .capture_inbound(br#"{"jsonrpc":"2.0"}"#)
             .unwrap_or_else(|_| Default::default());
-        capture.capture_outbound(br#"{"result":{}}"#).unwrap_or_else(|_| Default::default());
+        capture
+            .capture_outbound(br#"{"result":{}}"#)
+            .unwrap_or_else(|_| Default::default());
         capture.sync().unwrap_or_else(|_| Default::default());
 
         let wal_path = dir.path().join("transport.wal");
@@ -646,7 +649,8 @@ mod tests {
         let dir = tempdir().unwrap_or_else(|_| Default::default());
         let wal_path = dir.path().join("transport.wal");
 
-        let mut capture = TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
+        let mut capture =
+            TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
         capture
             .capture_inbound(br#"{"method":"ping"}"#)
             .unwrap_or_else(|_| Default::default());
@@ -662,12 +666,19 @@ mod tests {
             wal.flush().unwrap_or_else(|_| Default::default());
         }
 
-        let original_len = std::fs::metadata(&wal_path).unwrap_or_else(|_| Default::default()).len();
-        let mut capture = TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
-        capture.capture_outbound(br#"{"ok":true}"#).unwrap_or_else(|_| Default::default());
+        let original_len = std::fs::metadata(&wal_path)
+            .unwrap_or_else(|_| Default::default())
+            .len();
+        let mut capture =
+            TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
+        capture
+            .capture_outbound(br#"{"ok":true}"#)
+            .unwrap_or_else(|_| Default::default());
         capture.sync().unwrap_or_else(|_| Default::default());
 
-        let final_len = std::fs::metadata(&wal_path).unwrap_or_else(|_| Default::default()).len();
+        let final_len = std::fs::metadata(&wal_path)
+            .unwrap_or_else(|_| Default::default())
+            .len();
         assert!(final_len < original_len + 128);
         let summary = recover_entries(&wal_path).unwrap_or_else(|_| Default::default());
         assert_eq!(summary.entries, 2);
@@ -676,8 +687,12 @@ mod tests {
     #[test]
     fn disabled_capture_is_noop() {
         let mut capture = TransportCapture::Disabled;
-        capture.capture_inbound(b"abc").unwrap_or_else(|_| Default::default());
-        capture.capture_outbound(b"def").unwrap_or_else(|_| Default::default());
+        capture
+            .capture_inbound(b"abc")
+            .unwrap_or_else(|_| Default::default());
+        capture
+            .capture_outbound(b"def")
+            .unwrap_or_else(|_| Default::default());
         capture.sync().unwrap_or_else(|_| Default::default());
     }
 
@@ -693,8 +708,10 @@ mod tests {
             .open(&wal_path)
             .unwrap_or_else(|_| Default::default());
         write_header(&mut file, *Uuid::new_v4().as_bytes()).unwrap_or_else(|_| Default::default());
-        file.seek(SeekFrom::End(0)).unwrap_or_else(|_| Default::default());
-        file.write_all(&[1, 2, 3]).unwrap_or_else(|_| Default::default());
+        file.seek(SeekFrom::End(0))
+            .unwrap_or_else(|_| Default::default());
+        file.write_all(&[1, 2, 3])
+            .unwrap_or_else(|_| Default::default());
         file.flush().unwrap_or_else(|_| Default::default());
 
         let summary = recover_entries(&wal_path).unwrap_or_else(|_| Default::default());
@@ -705,7 +722,8 @@ mod tests {
     #[test]
     fn public_read_entries_and_status_work() {
         let dir = tempdir().unwrap_or_else(|_| Default::default());
-        let mut capture = TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
+        let mut capture =
+            TransportCapture::for_tests(dir.path()).unwrap_or_else(|_| Default::default());
         capture
             .capture_inbound(br#"{"jsonrpc":"2.0","method":"ping"}"#)
             .unwrap_or_else(|_| Default::default());

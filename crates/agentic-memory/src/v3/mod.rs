@@ -70,13 +70,12 @@ pub use encryption::{decrypt, derive_key, encrypt, generate_key, EncryptionKey};
 #[cfg(feature = "longevity")]
 pub use longevity::{
     BackupConfig, BackupDaemon, BackupMode, BackupSchedule, BudgetAlert, CaptureDaemon,
-    CaptureEvent, ClientLogMonitor, ConsolidationEngine, ConsolidationSchedule,
-    ConsolidationTask, ContentDedup, EmbeddingMigrator, EmbeddingModel, EncryptionRotator,
-    ForgettingProtocol, ForgettingVerdict, IntegrityVerifier, KeyLifecycle, KeyStatus,
-    LayerBudget, MemoryHierarchy, MemoryLayer, MemoryRecord, MerkleProof, MigrationEngine,
-    MigrationStrategy, SchemaVersion, SignificanceFactor, SignificanceScorer,
-    SignificanceThreshold, StorageBudget, StorageProjection, SyncDirection, SyncProtocol,
-    SyncResult,
+    CaptureEvent, ClientLogMonitor, ConsolidationEngine, ConsolidationSchedule, ConsolidationTask,
+    ContentDedup, EmbeddingMigrator, EmbeddingModel, EncryptionRotator, ForgettingProtocol,
+    ForgettingVerdict, IntegrityVerifier, KeyLifecycle, KeyStatus, LayerBudget, MemoryHierarchy,
+    MemoryLayer, MemoryRecord, MerkleProof, MigrationEngine, MigrationStrategy, SchemaVersion,
+    SignificanceFactor, SignificanceScorer, SignificanceThreshold, StorageBudget,
+    StorageProjection, SyncDirection, SyncProtocol, SyncResult,
 };
 
 /// V3 format version string

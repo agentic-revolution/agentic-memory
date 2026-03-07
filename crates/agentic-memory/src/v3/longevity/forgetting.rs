@@ -102,8 +102,7 @@ impl ForgettingProtocol {
                 let created = chrono::DateTime::parse_from_rfc3339(&memory.created_at)
                     .map(|dt| dt.with_timezone(&chrono::Utc))
                     .unwrap_or_else(|_| chrono::Utc::now());
-                let age_days =
-                    (chrono::Utc::now() - created).num_hours() as f64 / 24.0;
+                let age_days = (chrono::Utc::now() - created).num_hours() as f64 / 24.0;
 
                 let (eligible, reason) = self.check_eligibility(&memory, age_days);
                 if eligible {
@@ -178,10 +177,7 @@ impl ForgettingProtocol {
         // Rule 6: Memories with original_ids (compressed) are protected if referenced
         if memory.original_ids.is_some() && !memory.original_ids.as_ref().unwrap().is_empty() {
             // Compressed memories have provenance — keep them
-            return (
-                false,
-                "Compressed memory with provenance chain".to_string(),
-            );
+            return (false, "Compressed memory with provenance chain".to_string());
         }
 
         (true, "Eligible".to_string())

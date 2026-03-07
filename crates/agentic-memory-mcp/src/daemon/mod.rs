@@ -464,7 +464,9 @@ mod tests {
         status.state = DaemonRunState::Running;
         status.entries_extracted = 3;
         status.save(&path).unwrap_or_else(|_| Default::default());
-        let loaded = DaemonStatus::load(&path).unwrap_or_else(|_| Default::default()).unwrap_or_else(|_| Default::default());
+        let loaded = DaemonStatus::load(&path)
+            .unwrap_or_else(|_| Default::default())
+            .unwrap_or_else(|_| Default::default());
         assert_eq!(loaded.state, DaemonRunState::Running);
         assert_eq!(loaded.entries_extracted, 3);
     }

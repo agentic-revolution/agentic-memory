@@ -4,6 +4,7 @@
 //! as nodes in a graph, with typed edges representing relationships between them.
 
 pub mod bridges;
+pub mod cache;
 #[cfg(feature = "cli")]
 pub mod cli;
 pub mod contracts;
@@ -13,7 +14,6 @@ pub mod ffi;
 #[cfg(feature = "format")]
 pub mod format;
 pub mod graph;
-pub mod cache;
 pub mod index;
 pub mod metrics;
 pub mod query;
@@ -63,11 +63,10 @@ pub use v3::longevity::{
     self as longevity, BackupConfig, BackupDaemon, BackupMode, BackupSchedule, BudgetAlert,
     CaptureDaemon, CaptureEvent, ClientLogMonitor, ConsolidationEngine, ConsolidationSchedule,
     ConsolidationTask, ContentDedup, EmbeddingMigrator, EmbeddingModel, EncryptionRotator,
-    ForgettingProtocol, ForgettingVerdict, IntegrityVerifier, KeyLifecycle, KeyStatus,
-    LayerBudget, MemoryHierarchy, MemoryLayer, MemoryRecord, MerkleProof, MigrationEngine,
-    MigrationStrategy, SchemaVersion, SignificanceFactor, SignificanceScorer,
-    SignificanceThreshold, StorageBudget, StorageProjection, SyncDirection, SyncProtocol,
-    SyncResult,
+    ForgettingProtocol, ForgettingVerdict, IntegrityVerifier, KeyLifecycle, KeyStatus, LayerBudget,
+    MemoryHierarchy, MemoryLayer, MemoryRecord, MerkleProof, MigrationEngine, MigrationStrategy,
+    SchemaVersion, SignificanceFactor, SignificanceScorer, SignificanceThreshold, StorageBudget,
+    StorageProjection, SyncDirection, SyncProtocol, SyncResult,
 };
 
 /// Check if V3 feature is enabled

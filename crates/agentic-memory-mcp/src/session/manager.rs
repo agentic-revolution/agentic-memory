@@ -1834,7 +1834,9 @@ mod tests {
     fn budget_projection_available_with_timeline() {
         let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let brain = dir.path().join("projection.amem");
-        let mut manager = SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default())).unwrap_or_else(|_| Default::default());
+        let mut manager =
+            SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default()))
+                .unwrap_or_else(|_| Default::default());
 
         let (id_a, _) = manager
             .add_event(EventType::Fact, "old fact", 0.9, vec![])
@@ -1845,7 +1847,9 @@ mod tests {
 
         {
             let graph = manager.graph_mut();
-            let old = graph.get_node_mut(id_a).unwrap_or_else(|_| Default::default());
+            let old = graph
+                .get_node_mut(id_a)
+                .unwrap_or_else(|_| Default::default());
             old.created_at = old.created_at.saturating_sub(15 * 24 * 3600 * 1_000_000);
         }
         manager.save().unwrap_or_else(|_| Default::default());
@@ -1859,7 +1863,9 @@ mod tests {
     fn budget_auto_rollup_archives_completed_session() {
         let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let brain = dir.path().join("rollup.amem");
-        let mut manager = SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default())).unwrap_or_else(|_| Default::default());
+        let mut manager =
+            SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default()))
+                .unwrap_or_else(|_| Default::default());
 
         // Build current session with enough content, then advance so it becomes completed.
         let _ = manager
@@ -1868,7 +1874,9 @@ mod tests {
         let _ = manager
             .add_event(EventType::Decision, "beta", 0.9, vec![])
             .unwrap_or_else(|_| Default::default());
-        manager.start_session(None).unwrap_or_else(|_| Default::default());
+        manager
+            .start_session(None)
+            .unwrap_or_else(|_| Default::default());
         manager.save().unwrap_or_else(|_| Default::default());
 
         // Force tiny budget to trigger rollup.
@@ -1894,7 +1902,9 @@ mod tests {
     fn auto_capture_off_noop() {
         let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let brain = dir.path().join("capture-off.amem");
-        let mut manager = SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default())).unwrap_or_else(|_| Default::default());
+        let mut manager =
+            SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default()))
+                .unwrap_or_else(|_| Default::default());
         manager.auto_capture_mode = AutoCaptureMode::Off;
 
         let captured = manager
@@ -1911,7 +1921,9 @@ mod tests {
     fn auto_capture_full_records_and_redacts() {
         let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let brain = dir.path().join("capture-full.amem");
-        let mut manager = SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default())).unwrap_or_else(|_| Default::default());
+        let mut manager =
+            SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default()))
+                .unwrap_or_else(|_| Default::default());
         manager.auto_capture_mode = AutoCaptureMode::Full;
         manager.auto_capture_redact = true;
 
@@ -1943,7 +1955,9 @@ mod tests {
     fn auto_capture_temporal_chain() {
         let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let brain = dir.path().join("chain.amem");
-        let mut manager = SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default())).unwrap_or_else(|_| Default::default());
+        let mut manager =
+            SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default()))
+                .unwrap_or_else(|_| Default::default());
         manager.auto_capture_mode = AutoCaptureMode::Full;
 
         // First capture: no predecessor.
@@ -1976,7 +1990,9 @@ mod tests {
     fn temporal_chain_resets_on_new_session() {
         let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let brain = dir.path().join("reset.amem");
-        let mut manager = SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default())).unwrap_or_else(|_| Default::default());
+        let mut manager =
+            SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default()))
+                .unwrap_or_else(|_| Default::default());
         manager.auto_capture_mode = AutoCaptureMode::Full;
 
         let _id1 = manager
@@ -1986,7 +2002,9 @@ mod tests {
         assert!(manager.last_temporal_node_id().is_some());
 
         // Starting a new session should reset the chain.
-        manager.start_session(None).unwrap_or_else(|_| Default::default());
+        manager
+            .start_session(None)
+            .unwrap_or_else(|_| Default::default());
         assert!(manager.last_temporal_node_id().is_none());
     }
 
@@ -1994,7 +2012,9 @@ mod tests {
     fn memory_add_joins_temporal_chain() {
         let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let brain = dir.path().join("splice.amem");
-        let mut manager = SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default())).unwrap_or_else(|_| Default::default());
+        let mut manager =
+            SessionManager::open(brain.to_str().unwrap_or_else(|_| Default::default()))
+                .unwrap_or_else(|_| Default::default());
         manager.auto_capture_mode = AutoCaptureMode::Full;
 
         // Create a chain head via auto-capture.
@@ -2007,7 +2027,9 @@ mod tests {
         let (id2, _) = manager
             .add_event(EventType::Fact, "User prefers dark mode", 0.9, vec![])
             .unwrap_or_else(|_| Default::default());
-        manager.link_temporal(id1, id2).unwrap_or_else(|_| Default::default());
+        manager
+            .link_temporal(id1, id2)
+            .unwrap_or_else(|_| Default::default());
         manager.advance_temporal_chain(id2);
 
         assert_eq!(manager.last_temporal_node_id(), Some(id2));

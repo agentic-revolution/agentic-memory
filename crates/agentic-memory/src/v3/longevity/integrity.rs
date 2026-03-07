@@ -152,10 +152,7 @@ impl IntegrityVerifier {
         Ok(true)
     }
 
-    fn check_fts_sync(
-        store: &LongevityStore,
-        _project_id: &str,
-    ) -> Result<bool, LongevityError> {
+    fn check_fts_sync(store: &LongevityStore, _project_id: &str) -> Result<bool, LongevityError> {
         // Simple check: database is queryable = FTS is likely in sync
         // More thorough check would compare memory count vs FTS entry count
         let _size = store.database_size_bytes()?;

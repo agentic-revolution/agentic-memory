@@ -241,9 +241,8 @@ fn stress_significance_1000_memories() {
         );
         memory.access_count = (i % 50) as u64;
         // Vary ages
-        memory.created_at = (chrono::Utc::now()
-            - chrono::Duration::hours((i % 720) as i64))
-        .to_rfc3339();
+        memory.created_at =
+            (chrono::Utc::now() - chrono::Duration::hours((i % 720) as i64)).to_rfc3339();
 
         let score = scorer.score_simple(&memory);
         assert!(score >= 0.0 && score <= 1.0);
@@ -356,7 +355,10 @@ fn stress_full_consolidation_pipeline() {
         max_memories: 1000,
     };
     let r1 = engine.run(&store, &task1).unwrap();
-    println!("Raw→Episode: {} processed, {} created", r1.memories_processed, r1.memories_created);
+    println!(
+        "Raw→Episode: {} processed, {} created",
+        r1.memories_processed, r1.memories_created
+    );
     assert!(r1.memories_created > 0);
 
     // Phase 3: Episode → Summary (make episodes old enough)
@@ -379,7 +381,10 @@ fn stress_full_consolidation_pipeline() {
         max_memories: 1000,
     };
     let r2 = engine.run(&store, &task2).unwrap();
-    println!("Episode→Summary: {} processed, {} created", r2.memories_processed, r2.memories_created);
+    println!(
+        "Episode→Summary: {} processed, {} created",
+        r2.memories_processed, r2.memories_created
+    );
 
     // Phase 4: Summary → Pattern (make summaries old enough)
     let summaries = store
@@ -400,7 +405,10 @@ fn stress_full_consolidation_pipeline() {
         max_memories: 1000,
     };
     let r3 = engine.run(&store, &task3).unwrap();
-    println!("Summary→Pattern: {} processed, {} created", r3.memories_processed, r3.memories_created);
+    println!(
+        "Summary→Pattern: {} processed, {} created",
+        r3.memories_processed, r3.memories_created
+    );
 
     // Final stats
     let stats = store.hierarchy_stats("pipe-project").unwrap();
@@ -478,10 +486,7 @@ fn stress_capture_daemon_rapid_fire() {
     }
 
     let elapsed = start.elapsed();
-    println!(
-        "Captured {} of 5000 events in {:?}",
-        captured, elapsed
-    );
+    println!("Captured {} of 5000 events in {:?}", captured, elapsed);
     assert!(captured > 4000, "Should capture most unique events");
     assert!(
         elapsed.as_millis() < 2000,
@@ -619,12 +624,7 @@ fn stress_store_embedding_roundtrip() {
     assert_eq!(ret_embed.len(), 384);
     // Check values are preserved (within floating point tolerance)
     for (a, b) in embedding.iter().zip(ret_embed.iter()) {
-        assert!(
-            (a - b).abs() < 1e-6,
-            "Embedding mismatch: {} vs {}",
-            a,
-            b
-        );
+        assert!((a - b).abs() < 1e-6, "Embedding mismatch: {} vs {}", a, b);
     }
 }
 
@@ -746,7 +746,10 @@ fn stress_sync_500_captures() {
             } else {
                 CaptureRole::Assistant
             },
-            content: format!("Sync test message {} with enough content to be meaningful", i),
+            content: format!(
+                "Sync test message {} with enough content to be meaningful",
+                i
+            ),
             timestamp: i * 1000,
             source: CaptureSource::ClientLog,
             session_id: Some(format!("session-{}", i / 50)),
@@ -755,14 +758,10 @@ fn stress_sync_500_captures() {
         .collect();
 
     let start = std::time::Instant::now();
-    let result =
-        SyncProtocol::sync_captures_to_sqlite(&store, &events, "sync-project").unwrap();
+    let result = SyncProtocol::sync_captures_to_sqlite(&store, &events, "sync-project").unwrap();
     let elapsed = start.elapsed();
 
-    println!(
-        "Synced {} captures in {:?}",
-        result.records_synced, elapsed
-    );
+    println!("Synced {} captures in {:?}", result.records_synced, elapsed);
     assert_eq!(result.records_synced, 500);
     assert!(result.errors.is_empty());
     assert!(
@@ -954,8 +953,7 @@ fn stress_embedding_model_lifecycle() {
     EmbeddingMigrator::switch_model(&store, "embed-v1", "embed-v2").unwrap();
 
     // Check migration status
-    let status =
-        EmbeddingMigrator::migration_status(&store, "embed-v1", "embed-v2").unwrap();
+    let status = EmbeddingMigrator::migration_status(&store, "embed-v1", "embed-v2").unwrap();
     assert_eq!(status.remaining_memories, 50); // All still on v1
 
     // Active model should be v2
@@ -978,8 +976,7 @@ fn stress_realistic_developer_workflow() {
 
     // Simulate 7 days of developer activity
     for day in 0..7 {
-        let base_time =
-            chrono::Utc::now() - chrono::Duration::days(7 - day);
+        let base_time = chrono::Utc::now() - chrono::Duration::days(7 - day);
 
         // ~30 events per day
         for event in 0..30 {
@@ -1005,7 +1002,8 @@ fn stress_realistic_developer_workflow() {
                 Some(format!("session-day-{}", day)),
             );
 
-            record.created_at = (base_time + chrono::Duration::minutes(event as i64 * 5)).to_rfc3339();
+            record.created_at =
+                (base_time + chrono::Duration::minutes(event as i64 * 5)).to_rfc3339();
 
             // Score significance
             let score = scorer.score_simple(&record);
@@ -1094,7 +1092,11 @@ fn stress_project_isolation() {
 
         // FTS should be isolated too
         let results = store
-            .search_fulltext(&format!("project-{}", proj), &format!("Project {}", proj), 100)
+            .search_fulltext(
+                &format!("project-{}", proj),
+                &format!("Project {}", proj),
+                100,
+            )
             .unwrap();
         assert!(!results.is_empty());
     }
@@ -1138,7 +1140,10 @@ fn stress_hierarchy_large_group_splits() {
 
     let groups = MemoryHierarchy::group_for_episodes(&memories);
     // Should split into chunks of ~20
-    assert!(groups.len() >= 4, "100 memories should split into 4+ groups");
+    assert!(
+        groups.len() >= 4,
+        "100 memories should split into 4+ groups"
+    );
     for group in &groups {
         assert!(group.len() <= 30, "No group should exceed 30");
     }

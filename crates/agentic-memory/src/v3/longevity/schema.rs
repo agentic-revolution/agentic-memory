@@ -35,7 +35,11 @@ impl MigrationEngine {
             if let Some(migration) = Self::get_migration(version) {
                 // Migrations are currently additive-only in V1
                 // Future versions will add ALTER TABLE statements here
-                store.record_migration(version, &migration.description, migration.migration_sql.as_deref().unwrap_or(""))?;
+                store.record_migration(
+                    version,
+                    &migration.description,
+                    migration.migration_sql.as_deref().unwrap_or(""),
+                )?;
                 applied.push(migration);
             }
         }

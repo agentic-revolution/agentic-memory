@@ -378,7 +378,11 @@ impl SessionContext {
         }
 
         // Group parts by layer
-        let identity_parts: Vec<_> = self.parts.iter().filter(|p| p.layer == "identity").collect();
+        let identity_parts: Vec<_> = self
+            .parts
+            .iter()
+            .filter(|p| p.layer == "identity")
+            .collect();
         let trait_parts: Vec<_> = self.parts.iter().filter(|p| p.layer == "trait").collect();
         let pattern_parts: Vec<_> = self.parts.iter().filter(|p| p.layer == "pattern").collect();
 

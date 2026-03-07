@@ -341,8 +341,14 @@ impl MemoryHierarchy {
 
         let time_range = format!(
             "{} to {}",
-            memories.first().map(|m| m.created_at.as_str()).unwrap_or("?"),
-            memories.last().map(|m| m.created_at.as_str()).unwrap_or("?")
+            memories
+                .first()
+                .map(|m| m.created_at.as_str())
+                .unwrap_or("?"),
+            memories
+                .last()
+                .map(|m| m.created_at.as_str())
+                .unwrap_or("?")
         );
 
         serde_json::json!({
@@ -484,7 +490,8 @@ impl MemoryHierarchy {
 
         if !all_files.is_empty() {
             // Deduplicate and find most common
-            let mut file_counts: std::collections::HashMap<&str, u32> = std::collections::HashMap::new();
+            let mut file_counts: std::collections::HashMap<&str, u32> =
+                std::collections::HashMap::new();
             for f in &all_files {
                 *file_counts.entry(f.as_str()).or_default() += 1;
             }

@@ -76,10 +76,7 @@ impl StorageBudget {
     }
 
     /// Get budget allocation and usage for each layer.
-    pub fn layer_budgets(
-        &self,
-        stats: &HierarchyStats,
-    ) -> Vec<LayerBudget> {
+    pub fn layer_budgets(&self, stats: &HierarchyStats) -> Vec<LayerBudget> {
         LAYER_ALLOCATIONS
             .iter()
             .map(|(layer, fraction)| {
@@ -108,10 +105,9 @@ impl StorageBudget {
                         "WARNING: {} layer at {:.1}% — accelerate consolidation",
                         layer, used_percent
                     ),
-                    BudgetAlert::Healthy => format!(
-                        "{} layer at {:.1}% — healthy",
-                        layer, used_percent
-                    ),
+                    BudgetAlert::Healthy => {
+                        format!("{} layer at {:.1}% — healthy", layer, used_percent)
+                    }
                 };
 
                 LayerBudget {
@@ -127,8 +123,7 @@ impl StorageBudget {
 
     /// Get the overall budget status.
     pub fn overall_status(&self, stats: &HierarchyStats) -> BudgetStatus {
-        let used_percent =
-            (stats.total_bytes as f64 / self.total_budget_bytes as f64) * 100.0;
+        let used_percent = (stats.total_bytes as f64 / self.total_budget_bytes as f64) * 100.0;
 
         let alert = if used_percent >= 95.0 {
             BudgetAlert::Critical

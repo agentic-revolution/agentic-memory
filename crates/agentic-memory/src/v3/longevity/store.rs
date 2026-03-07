@@ -51,11 +51,9 @@ impl LongevityStore {
     fn initialize_schema(&self) -> Result<(), LongevityError> {
         self.conn.execute_batch(SCHEMA_V1)?;
         // Record schema version 1 if not already present
-        let count: u32 = self
-            .conn
-            .query_row("SELECT COUNT(*) FROM schema_versions", [], |row| {
-                row.get(0)
-            })?;
+        let count: u32 =
+            self.conn
+                .query_row("SELECT COUNT(*) FROM schema_versions", [], |row| row.get(0))?;
         if count == 0 {
             self.conn.execute(
                 "INSERT INTO schema_versions (version, applied_at, description) VALUES (1, datetime('now'), 'Initial longevity schema')",
@@ -71,11 +69,10 @@ impl LongevityStore {
 
     /// Insert a memory record.
     pub fn insert_memory(&self, record: &MemoryRecord) -> Result<(), LongevityError> {
-        let embedding_blob = record.embedding.as_ref().map(|v| {
-            v.iter()
-                .flat_map(|f| f.to_le_bytes())
-                .collect::<Vec<u8>>()
-        });
+        let embedding_blob = record
+            .embedding
+            .as_ref()
+            .map(|v| v.iter().flat_map(|f| f.to_le_bytes()).collect::<Vec<u8>>());
         let original_ids_json = record
             .original_ids
             .as_ref()
@@ -230,11 +227,7 @@ impl LongevityStore {
     }
 
     /// Update significance score for a memory.
-    pub fn update_significance(
-        &self,
-        id: &str,
-        significance: f64,
-    ) -> Result<(), LongevityError> {
+    pub fn update_significance(&self, id: &str, significance: f64) -> Result<(), LongevityError> {
         self.conn.execute(
             "UPDATE memories SET significance = ?1 WHERE id = ?2",
             params![significance, id],
@@ -257,7 +250,8 @@ impl LongevityStore {
         for id in ids {
             count += self
                 .conn
-                .execute("DELETE FROM memories WHERE id = ?1", params![id])? as u64;
+                .execute("DELETE FROM memories WHERE id = ?1", params![id])?
+                as u64;
         }
         Ok(count)
     }
@@ -416,10 +410,7 @@ impl LongevityStore {
     }
 
     /// Count memories using a specific embedding model.
-    pub fn count_memories_with_model(
-        &self,
-        model_id: &str,
-    ) -> Result<u64, LongevityError> {
+    pub fn count_memories_with_model(&self, model_id: &str) -> Result<u64, LongevityError> {
         let count: u64 = self.conn.query_row(
             "SELECT COUNT(*) FROM memories WHERE embedding_model = ?1",
             params![model_id],
@@ -487,11 +478,11 @@ impl LongevityStore {
 
     /// Get current schema version.
     pub fn current_schema_version(&self) -> Result<u32, LongevityError> {
-        let version: u32 = self.conn.query_row(
-            "SELECT MAX(version) FROM schema_versions",
-            [],
-            |row| row.get(0),
-        )?;
+        let version: u32 =
+            self.conn
+                .query_row("SELECT MAX(version) FROM schema_versions", [], |row| {
+                    row.get(0)
+                })?;
         Ok(version)
     }
 
@@ -589,7 +580,11 @@ impl LongevityStore {
         )?;
 
         let rows = stmt.query_map(params![project_id], |row| {
-            Ok((row.get::<_, u8>(0)?, row.get::<_, u64>(1)?, row.get::<_, u64>(2)?))
+            Ok((
+                row.get::<_, u8>(0)?,
+                row.get::<_, u64>(1)?,
+                row.get::<_, u64>(2)?,
+            ))
         })?;
 
         for row in rows.flatten() {
@@ -687,10 +682,8 @@ impl LongevityStore {
                 .map(|chunk| f32::from_le_bytes([chunk[0], chunk[1], chunk[2], chunk[3]]))
                 .collect()
         });
-        let original_ids = original_ids_str
-            .and_then(|s| serde_json::from_str(&s).ok());
-        let metadata = metadata_str
-            .and_then(|s| serde_json::from_str(&s).ok());
+        let original_ids = original_ids_str.and_then(|s| serde_json::from_str(&s).ok());
+        let metadata = metadata_str.and_then(|s| serde_json::from_str(&s).ok());
 
         Ok(MemoryRecord {
             id: row.get(0)?,

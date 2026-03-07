@@ -202,7 +202,8 @@ impl ToolRegistry {
                     return result;
                 }
                 // TRANSCENDENT (21-24): 16 tools
-                if let Some(result) = invention_transcendent::try_execute(name, args.clone(), session).await
+                if let Some(result) =
+                    invention_transcendent::try_execute(name, args.clone(), session).await
                 {
                     return result;
                 }

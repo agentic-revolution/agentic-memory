@@ -1,7 +1,7 @@
 //! Comprehensive tests for the V4 Longevity Engine.
 
-use super::*;
 use super::capture::{CaptureRole, CaptureSource};
+use super::*;
 
 // ═══════════════════════════════════════════════════════════════════
 // PHASE 1: HIERARCHY & TYPES
@@ -144,10 +144,14 @@ fn test_store_query_by_layer() {
     );
     store.insert_memory(&episode).unwrap();
 
-    let raw = store.query_by_layer("project-1", MemoryLayer::Raw, 100).unwrap();
+    let raw = store
+        .query_by_layer("project-1", MemoryLayer::Raw, 100)
+        .unwrap();
     assert_eq!(raw.len(), 5);
 
-    let episodes = store.query_by_layer("project-1", MemoryLayer::Episode, 100).unwrap();
+    let episodes = store
+        .query_by_layer("project-1", MemoryLayer::Episode, 100)
+        .unwrap();
     assert_eq!(episodes.len(), 1);
 }
 
@@ -173,11 +177,15 @@ fn test_store_query_by_significance() {
     high.significance = 0.9;
     store.insert_memory(&high).unwrap();
 
-    let low_results = store.query_by_significance("project-1", 0.0, 0.5, 100).unwrap();
+    let low_results = store
+        .query_by_significance("project-1", 0.0, 0.5, 100)
+        .unwrap();
     assert_eq!(low_results.len(), 1);
     assert_eq!(low_results[0].id, "low");
 
-    let high_results = store.query_by_significance("project-1", 0.5, 1.0, 100).unwrap();
+    let high_results = store
+        .query_by_significance("project-1", 0.5, 1.0, 100)
+        .unwrap();
     assert_eq!(high_results.len(), 1);
     assert_eq!(high_results[0].id, "high");
 }
@@ -263,21 +271,25 @@ fn test_store_hierarchy_stats() {
     let store = LongevityStore::open_memory().unwrap();
 
     for i in 0..3 {
-        store.insert_memory(&MemoryRecord::new_raw(
-            format!("raw-{}", i),
-            serde_json::json!({"text": "test"}),
-            "project-1".to_string(),
-            None,
-        )).unwrap();
+        store
+            .insert_memory(&MemoryRecord::new_raw(
+                format!("raw-{}", i),
+                serde_json::json!({"text": "test"}),
+                "project-1".to_string(),
+                None,
+            ))
+            .unwrap();
     }
 
-    store.insert_memory(&MemoryRecord::new_compressed(
-        "ep-1".to_string(),
-        MemoryLayer::Episode,
-        serde_json::json!({"summary": "episode"}),
-        vec![],
-        "project-1".to_string(),
-    )).unwrap();
+    store
+        .insert_memory(&MemoryRecord::new_compressed(
+            "ep-1".to_string(),
+            MemoryLayer::Episode,
+            serde_json::json!({"summary": "episode"}),
+            vec![],
+            "project-1".to_string(),
+        ))
+        .unwrap();
 
     let stats = store.hierarchy_stats("project-1").unwrap();
     assert_eq!(stats.raw_count, 3);
@@ -288,10 +300,18 @@ fn test_store_hierarchy_stats() {
 #[test]
 fn test_store_consolidation_log() {
     let store = LongevityStore::open_memory().unwrap();
-    store.log_consolidation(
-        "log-1", MemoryLayer::Raw, MemoryLayer::Episode,
-        10, 2, 5.0, "algorithmic", 150,
-    ).unwrap();
+    store
+        .log_consolidation(
+            "log-1",
+            MemoryLayer::Raw,
+            MemoryLayer::Episode,
+            10,
+            2,
+            5.0,
+            "algorithmic",
+            150,
+        )
+        .unwrap();
 
     let logs = store.get_consolidation_log(10).unwrap();
     assert_eq!(logs.len(), 1);
@@ -302,13 +322,17 @@ fn test_store_consolidation_log() {
 #[test]
 fn test_store_embedding_models() {
     let store = LongevityStore::open_memory().unwrap();
-    store.register_embedding_model("model-1", "test-embed", 384, "local").unwrap();
+    store
+        .register_embedding_model("model-1", "test-embed", 384, "local")
+        .unwrap();
 
     let active = store.get_active_embedding_model().unwrap();
     assert!(active.is_some());
     assert_eq!(active.unwrap().model_id, "model-1");
 
-    store.retire_embedding_model("model-1", Some("model-2")).unwrap();
+    store
+        .retire_embedding_model("model-1", Some("model-2"))
+        .unwrap();
     let active = store.get_active_embedding_model().unwrap();
     assert!(active.is_none());
 }
@@ -324,7 +348,9 @@ fn test_store_schema_history() {
 #[test]
 fn test_store_integrity_proofs() {
     let store = LongevityStore::open_memory().unwrap();
-    store.store_integrity_proof("proof-1", "merkle_root", "abc123", 100).unwrap();
+    store
+        .store_integrity_proof("proof-1", "merkle_root", "abc123", 100)
+        .unwrap();
 
     let proof = store.latest_integrity_proof().unwrap();
     assert!(proof.is_some());
@@ -408,7 +434,12 @@ fn test_significance_recent_scores_higher() {
 
     let recent_score = scorer.score_simple(&recent);
     let old_score = scorer.score_simple(&old);
-    assert!(recent_score > old_score, "Recent should score higher: {} vs {}", recent_score, old_score);
+    assert!(
+        recent_score > old_score,
+        "Recent should score higher: {} vs {}",
+        recent_score,
+        old_score
+    );
 }
 
 #[test]
@@ -430,16 +461,33 @@ fn test_significance_emotional_content_scores_higher() {
 
     let e_score = scorer.score_simple(&emotional);
     let b_score = scorer.score_simple(&bland);
-    assert!(e_score > b_score, "Emotional should score higher: {} vs {}", e_score, b_score);
+    assert!(
+        e_score > b_score,
+        "Emotional should score higher: {} vs {}",
+        e_score,
+        b_score
+    );
 }
 
 #[test]
 fn test_significance_thresholds() {
     use significance::SignificanceThreshold;
-    assert!(matches!(SignificanceThreshold::from_score(0.9), SignificanceThreshold::Immune));
-    assert!(matches!(SignificanceThreshold::from_score(0.6), SignificanceThreshold::Normal));
-    assert!(matches!(SignificanceThreshold::from_score(0.3), SignificanceThreshold::Accelerated));
-    assert!(matches!(SignificanceThreshold::from_score(0.1), SignificanceThreshold::Forgettable));
+    assert!(matches!(
+        SignificanceThreshold::from_score(0.9),
+        SignificanceThreshold::Immune
+    ));
+    assert!(matches!(
+        SignificanceThreshold::from_score(0.6),
+        SignificanceThreshold::Normal
+    ));
+    assert!(matches!(
+        SignificanceThreshold::from_score(0.3),
+        SignificanceThreshold::Accelerated
+    ));
+    assert!(matches!(
+        SignificanceThreshold::from_score(0.1),
+        SignificanceThreshold::Forgettable
+    ));
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -519,7 +567,9 @@ fn test_consolidation_raw_to_episode() {
     assert!(result.compression_ratio > 1.0);
 
     // Check episodes were created
-    let episodes = store.query_by_layer("project-1", MemoryLayer::Episode, 100).unwrap();
+    let episodes = store
+        .query_by_layer("project-1", MemoryLayer::Episode, 100)
+        .unwrap();
     assert!(!episodes.is_empty());
 }
 
@@ -578,16 +628,18 @@ fn test_hierarchy_group_for_episodes() {
 #[test]
 fn test_hierarchy_create_episode_summary() {
     let memories: Vec<MemoryRecord> = (0..5)
-        .map(|i| MemoryRecord::new_raw(
-            format!("raw-{}", i),
-            serde_json::json!({
-                "text": format!("Working on file_{}.rs", i),
-                "path": format!("src/file_{}.rs", i),
-                "tool_name": "read_file",
-            }),
-            "proj".to_string(),
-            Some("session-1".to_string()),
-        ))
+        .map(|i| {
+            MemoryRecord::new_raw(
+                format!("raw-{}", i),
+                serde_json::json!({
+                    "text": format!("Working on file_{}.rs", i),
+                    "path": format!("src/file_{}.rs", i),
+                    "tool_name": "read_file",
+                }),
+                "proj".to_string(),
+                Some("session-1".to_string()),
+            )
+        })
         .collect();
 
     let refs: Vec<&MemoryRecord> = memories.iter().collect();
@@ -722,7 +774,9 @@ fn test_forgetting_eligibility_checks() {
     candidate.created_at = (chrono::Utc::now() - chrono::Duration::days(60)).to_rfc3339();
     store.insert_memory(&candidate).unwrap();
 
-    let verdicts = protocol.evaluate_candidates(&store, "project-1", 100).unwrap();
+    let verdicts = protocol
+        .evaluate_candidates(&store, "project-1", 100)
+        .unwrap();
     assert_eq!(verdicts.len(), 1);
     assert!(verdicts[0].eligible);
 }
@@ -743,7 +797,9 @@ fn test_forgetting_protects_identity() {
     identity.created_at = (chrono::Utc::now() - chrono::Duration::days(365)).to_rfc3339();
     store.insert_memory(&identity).unwrap();
 
-    let verdicts = protocol.evaluate_candidates(&store, "project-1", 100).unwrap();
+    let verdicts = protocol
+        .evaluate_candidates(&store, "project-1", 100)
+        .unwrap();
     assert_eq!(verdicts.len(), 1);
     assert!(!verdicts[0].eligible); // Identity is protected
 }
@@ -763,7 +819,9 @@ fn test_forgetting_execute() {
     candidate.created_at = (chrono::Utc::now() - chrono::Duration::days(60)).to_rfc3339();
     store.insert_memory(&candidate).unwrap();
 
-    let result = protocol.execute(&store, &["forget-me".to_string()]).unwrap();
+    let result = protocol
+        .execute(&store, &["forget-me".to_string()])
+        .unwrap();
     assert_eq!(result.forgotten_count, 1);
     assert!(store.get_memory("forget-me").unwrap().is_none());
 }
@@ -838,12 +896,14 @@ fn test_integrity_merkle_proof() {
 
     // Insert some data
     for i in 0..5 {
-        store.insert_memory(&MemoryRecord::new_raw(
-            format!("m-{}", i),
-            serde_json::json!({"text": format!("memory {}", i)}),
-            "project-1".to_string(),
-            None,
-        )).unwrap();
+        store
+            .insert_memory(&MemoryRecord::new_raw(
+                format!("m-{}", i),
+                serde_json::json!({"text": format!("memory {}", i)}),
+                "project-1".to_string(),
+                None,
+            ))
+            .unwrap();
     }
 
     let proof = IntegrityVerifier::create_merkle_proof(&store, "project-1").unwrap();
@@ -851,9 +911,8 @@ fn test_integrity_merkle_proof() {
     assert_eq!(proof.leaf_count, 5);
 
     // Verify against proof
-    let verified = IntegrityVerifier::verify_against_proof(
-        &store, "project-1", &proof.root_hash,
-    ).unwrap();
+    let verified =
+        IntegrityVerifier::verify_against_proof(&store, "project-1", &proof.root_hash).unwrap();
     assert!(verified);
 }
 
@@ -896,12 +955,14 @@ fn test_sync_load_session_context() {
     let store = LongevityStore::open_memory().unwrap();
 
     // Insert some memories at various layers
-    store.insert_memory(&MemoryRecord::new_raw(
-        "raw-1".to_string(),
-        serde_json::json!({"text": "recent event"}),
-        "project-1".to_string(),
-        Some("session-1".to_string()),
-    )).unwrap();
+    store
+        .insert_memory(&MemoryRecord::new_raw(
+            "raw-1".to_string(),
+            serde_json::json!({"text": "recent event"}),
+            "project-1".to_string(),
+            Some("session-1".to_string()),
+        ))
+        .unwrap();
 
     let mut pattern = MemoryRecord::new_compressed(
         "pat-1".to_string(),
@@ -981,7 +1042,9 @@ fn test_backup_to_local() {
     let backup_dest = temp.path().join("backups");
     std::fs::create_dir_all(&backup_dest).unwrap();
 
-    let result = daemon.backup_to_local(&amem_path, &longevity_path, &backup_dest).unwrap();
+    let result = daemon
+        .backup_to_local(&amem_path, &longevity_path, &backup_dest)
+        .unwrap();
     assert!(result.success);
     assert!(result.size_bytes > 0);
     assert!(!result.files_backed_up.is_empty());
@@ -994,9 +1057,7 @@ fn test_backup_to_local() {
 #[test]
 fn test_embedding_register_model() {
     let store = LongevityStore::open_memory().unwrap();
-    EmbeddingMigrator::register_model(
-        &store, "model-v1", "test-embed-v1", 384, "local",
-    ).unwrap();
+    EmbeddingMigrator::register_model(&store, "model-v1", "test-embed-v1", 384, "local").unwrap();
 
     let models = EmbeddingMigrator::list_models(&store).unwrap();
     assert_eq!(models.len(), 1);
@@ -1102,12 +1163,14 @@ fn test_end_to_end_full_lifecycle() {
 
     // 2. Store memories
     for i in 0..10 {
-        store.insert_memory(&MemoryRecord::new_raw(
-            format!("m-{}", i),
-            serde_json::json!({"text": format!("memory {}", i)}),
-            "project-1".to_string(),
-            None,
-        )).unwrap();
+        store
+            .insert_memory(&MemoryRecord::new_raw(
+                format!("m-{}", i),
+                serde_json::json!({"text": format!("memory {}", i)}),
+                "project-1".to_string(),
+                None,
+            ))
+            .unwrap();
     }
 
     // 3. Create integrity proof
