@@ -729,7 +729,7 @@ pub async fn execute_belief_list(
             .and_then(|v| v.as_f64())
             .unwrap_or(0.0)
             .partial_cmp(&a.get("confidence").and_then(|v| v.as_f64()).unwrap_or(0.0))
-            .unwrap()
+            .unwrap_or(std::cmp::Ordering::Equal)
     });
     beliefs.truncate(max_results);
 
@@ -1091,7 +1091,7 @@ pub async fn execute_load_prefetch(
             ));
         }
     }
-    matches.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
+    matches.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap_or(std::cmp::Ordering::Equal));
     let prefetched: Vec<Value> = matches
         .into_iter()
         .take(max_items)

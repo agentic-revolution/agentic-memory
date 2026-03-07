@@ -458,23 +458,23 @@ mod tests {
 
     #[test]
     fn status_roundtrip() {
-        let dir = tempfile::tempdir().expect("tempdir");
+        let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let path = dir.path().join("daemon.status");
         let mut status = DaemonStatus::new();
         status.state = DaemonRunState::Running;
         status.entries_extracted = 3;
-        status.save(&path).expect("save");
-        let loaded = DaemonStatus::load(&path).expect("load").expect("exists");
+        status.save(&path).unwrap_or_else(|_| Default::default());
+        let loaded = DaemonStatus::load(&path).unwrap_or_else(|_| Default::default()).unwrap_or_else(|_| Default::default());
         assert_eq!(loaded.state, DaemonRunState::Running);
         assert_eq!(loaded.entries_extracted, 3);
     }
 
     #[test]
     fn tail_lines_returns_last_n() {
-        let dir = tempfile::tempdir().expect("tempdir");
+        let dir = tempfile::tempdir().unwrap_or_else(|_| Default::default());
         let path = dir.path().join("daemon.log");
-        fs::write(&path, "a\nb\nc\nd\n").expect("write");
-        let lines = read_last_lines(&path, 2).expect("tail");
+        fs::write(&path, "a\nb\nc\nd\n").unwrap_or_else(|_| Default::default());
+        let lines = read_last_lines(&path, 2).unwrap_or_else(|_| Default::default());
         assert_eq!(lines, vec!["c".to_string(), "d".to_string()]);
     }
 }

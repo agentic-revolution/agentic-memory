@@ -240,7 +240,9 @@ impl WorkspaceManager {
         max_per_context: usize,
     ) -> McpResult<Comparison> {
         let results = self.query_all(workspace_id, item, max_per_context)?;
-        let workspace = self.workspaces.get(workspace_id).unwrap();
+        let workspace = self.workspaces.get(workspace_id).ok_or_else(|| {
+            McpError::InternalError(format!("workspace not found: {workspace_id}"))
+        })?;
 
         let mut found_in = Vec::new();
         let mut missing_from = Vec::new();

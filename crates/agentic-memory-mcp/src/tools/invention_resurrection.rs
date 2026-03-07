@@ -132,7 +132,7 @@ pub async fn execute_archaeology_dig(
             .and_then(|v| v.as_f64())
             .unwrap_or(0.0)
             .partial_cmp(&a.get("relevance").and_then(|v| v.as_f64()).unwrap_or(0.0))
-            .unwrap()
+            .unwrap_or(std::cmp::Ordering::Equal)
     });
     let total_artifacts = artifacts.len() + related.len();
     Ok(ToolCallResult::json(&json!({
@@ -277,7 +277,7 @@ pub async fn execute_archaeology_reconstruct(
             .and_then(|v| v.as_f64())
             .unwrap_or(0.0)
             .partial_cmp(&a.get("relevance").and_then(|v| v.as_f64()).unwrap_or(0.0))
-            .unwrap()
+            .unwrap_or(std::cmp::Ordering::Equal)
     });
 
     let reconstruction_confidence = if fragments.is_empty() {
@@ -965,7 +965,7 @@ pub async fn execute_phoenix_gather(
             .iter()
             .filter(|n| n.confidence >= 0.8)
             .collect();
-        high_conf.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap());
+        high_conf.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap_or(std::cmp::Ordering::Equal));
         for node in high_conf.iter().take(max_traces / 3) {
             traces.push(json!({
                 "trace_type": "HighConfidenceNode",
