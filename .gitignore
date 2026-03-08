@@ -87,3 +87,6 @@ goals/
 .env.local
 *.pem
 *.key
+
+# Internal architecture docs
+THE-UNIVERSAL-FIX.md
